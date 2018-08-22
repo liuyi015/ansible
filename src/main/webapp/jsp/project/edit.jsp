@@ -11,15 +11,15 @@
 </head>
 <body>
 <form id="add" name="add" action="${pageContext.request.contextPath}/project/doEdit" method="put">
-	*name:<input type="text" name="name" /><br><br>
-	description:<input type="text" name="description"/><br><br>
-	*organization:<input type="text" name="organization" value="1"/><br><br>
-	*scm_type:<select name="scm_type">
-				<option value="">Manual</option>
+	*name:<input type="text" name="name" value="${requestScope.project.name}"></input><br><br>
+	description:<input type="text" name="description" value="${requestScope.project.description}"></input><br><br>
+	*organization:<input type="text" name="organization" value="${requestScope.project.organization}"></input><br><br>
+	*scm_type:<select name="scm_type" >
+				<option value=""  selected='<c:if test="${requestScope.project.scm_type} eq '' "></c:if>'>Manual</option>
 				<option value="git">Git</option>
 			</select><br><br>
-	project base path:<input type="text" name="local_path"/><br><br>
-	scm_url:<input type="text" name="scm_url"/><br><br>
+	project base path:<input type="text" name="local_path" value="${requestScope.project.local_path}"/></input><br><br>
+	scm_url:<input type="text" name="scm_url" value="${requestScope.project.scm_url}"></input><br><br>
 	<input type="submit" value="提交" />
 </form>
 

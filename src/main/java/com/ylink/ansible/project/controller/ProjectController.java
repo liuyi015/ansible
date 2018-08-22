@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ylink.ansible.project.pojo.Project;
@@ -53,8 +54,8 @@ public class ProjectController {
 		return "redirect:/project/list";
 	}
 	
-	@RequestMapping("/toEdit/{id}")
-	public String toEdit(@PathVariable(value="id") Integer id,HttpServletRequest request) throws Exception {
+	@RequestMapping("/toEdit")
+	public String toEdit(@RequestParam(value="id") Integer id,HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
 		
 		Project project = projectService.findById(id,cookies);

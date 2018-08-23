@@ -73,5 +73,24 @@ public class ProjectService {
 		return project;
 	}
 
+	public Project UpdateProject(Project project, Cookie[] cookies) throws Exception {
+		Cookie token = Common.getToken(cookies);
+		String apiUrl=API_URL+"/projects/"+project.getId()+"/";
+		JSONObject jsonObject = JSONObject.fromObject(project);
+		String rs=HttpRequestUtils.sendHttpsRequestByPutAndCookie(apiUrl, jsonObject, token);
+		Project poj=null;
+		if(StringUtils.isNotEmpty(rs)) {
+			poj=(Project) JSONObject.toBean(JSONObject.fromObject(rs), Project.class);
+		}
+		return poj;
+	}
+
+	public String deleteProject(String id, Cookie[] cookies) throws Exception {
+		Cookie token = Common.getToken(cookies);
+		String apiUrl=API_URL+"/projects/"+id+"/";
+		String rs=HttpRequestUtils.sendHttpsRequestByDelete(apiUrl, token);
+		return null;
+	}
+
 
 }

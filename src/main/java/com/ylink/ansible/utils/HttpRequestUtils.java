@@ -18,8 +18,10 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -144,6 +146,56 @@ public class HttpRequestUtils {
         }
         return responseContent;
     }
+	/**
+     * 发送 SSL PUT 请求（HTTPS），JSON形式，带cookie
+     * @param apiUrl API接口URL
+     * @param json JSON对象
+     * @return api返回值（String）
+	 * @throws Exception 
+     */
+	public static String sendHttpsRequestByPutAndCookie(String apiUrl, Object json,Cookie cookie) throws Exception {
+		String responseContent = null;
+		HttpClient httpClient = ConnectionManagerUtils.getHttpClient();
+        HttpPut httpPut = new HttpPut(apiUrl);
+        try {
+        	if(cookie!=null) {
+        		String cookieStr=cookie.getName()+"="+cookie.getValue();
+        		httpPut.addHeader("Cookie", cookieStr);
+        	}
+        	//发生重定向时服务端返回的数据中可以看到location（需重定向的地址）
+//        	httpPost.addHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)"); 
+        	
+            StringEntity stringEntity = new StringEntity(json.toString(),"UTF-8");//解决中文乱码问题
+            stringEntity.setContentEncoding("UTF-8");
+            stringEntity.setContentType("application/json");
+            httpPut.setEntity(stringEntity);
+            
+            long begin = System.currentTimeMillis();
+            //发送请求
+            HttpResponse response = httpClient.execute(httpPut);
+            long end = System.currentTimeMillis();
+            System.out.println("Time:"+(end-begin)+"ms");
+            
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != HttpStatus.SC_OK) {
+            	 System.out.println(EntityUtils.toString(response.getEntity(), "utf-8"));
+                return null;
+            }
+            HttpEntity entity = response.getEntity(); // 获取响应实体
+            if (entity == null) {
+                return null;
+            }
+            responseContent = EntityUtils.toString(entity, "utf-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            // 关闭连接,释放资源
+        	httpPut.releaseConnection();
+           // httpClient.getConnectionManager().shutdown();
+        }
+        return responseContent;
+    }
     
     /**
      * 发送 SSL get 请求（HTTPS）,携带Cookie
@@ -185,6 +237,40 @@ public class HttpRequestUtils {
         return responseContent;
     }
 
+	/**
+     * 发送 SSL delete 请求（HTTPS）,携带Cookie
+     * @param apiUrl API接口URL
+     * @param cookie   要发送的cookie对象
+     * @return api返回值（String）
+     * @throws Exception 
+     */
+	public static String sendHttpsRequestByDelete(String apiUrl, Cookie cookie) throws Exception {
+        String responseContent = null;
+        HttpClient httpClient = ConnectionManagerUtils.getHttpClient();
+        HttpDelete httpDelete = new HttpDelete(apiUrl);
+        
+        try {
+        	
+            String cookieStr=cookie.getName()+"="+cookie.getValue();
+            httpDelete.addHeader("Cookie", cookieStr);
+            
+            HttpResponse response = httpClient.execute(httpDelete);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_NO_CONTENT) {
+            	responseContent="success";
+            }else {
+            	 System.out.println(EntityUtils.toString(response.getEntity(), "utf-8"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+        	httpDelete.releaseConnection();
+            // 关闭连接,释放资源
+           // httpClient.getConnectionManager().shutdown();
+        }
+        return responseContent;
+    }
     
     /**
      * 初始化HttpClient，发送https时不验证证书
@@ -225,5 +311,7 @@ public class HttpRequestUtils {
             httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 2000);
 			return httpClient;
     }
+    
+	 
     
 }

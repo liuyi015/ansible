@@ -38,7 +38,6 @@ public class Project {
 	private String last_updated;   
 	
 	
-	
 	public String getLast_job_run() {
 		return last_job_run;
 	}

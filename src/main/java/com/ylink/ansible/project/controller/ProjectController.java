@@ -63,4 +63,30 @@ public class ProjectController {
 		
 		return "project/edit";
 	}
+	
+	@RequestMapping("/doEdit")
+	public String doEdit(Project project,HttpServletRequest request,RedirectAttributes attr) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		
+		Project pro = projectService.UpdateProject(project,cookies);
+		if(pro==null) {
+			request.setAttribute("error", "更新失败 ！！！！！");
+			return "project/edit"; 
+		}
+		request.setAttribute("project", pro);
+		request.setAttribute("success", "更新成功 ！！！！！");
+		attr.addAttribute("id", project.getId());
+		return "redirect:/project/toEdit";
+	}
+	@RequestMapping("/toDelete")
+	public String toDelete(@RequestParam String id,HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		
+		String rs = projectService.deleteProject(id,cookies);
+		if(rs==null) {
+			request.setAttribute("error", "删除失败 ！！！！！");
+		}
+		request.setAttribute("success", "成功删除 ！！！！！");
+		return "redirect:/project/list";
+	}
 }

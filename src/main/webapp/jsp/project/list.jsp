@@ -32,6 +32,9 @@ function edit(id){
 }
 
 function del(id){
+	if(!confirm("确认删除"+id+"项目")){
+		return;
+	}
 	var url="${pageContext.request.contextPath}/project/toDelete?id="+id;
 	location.href=url;
 }

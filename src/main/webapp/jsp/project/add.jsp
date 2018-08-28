@@ -10,6 +10,19 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 $(function(){
+	var rs="<%=session.getAttribute("msg")%>";
+	if(rs!="null"){
+		<%session.removeAttribute("msg");%>
+		alert(rs);
+	}
+	//获取config信息
+	getConfig();
+});
+
+/* 
+获取config信息
+*/
+function getConfig(){
 	$.ajax({
 		type:"GET",
 		async:false, //设为同步请求（异步加载的话后面的遍历方法获取不到option）
@@ -25,7 +38,7 @@ $(function(){
 			}
 		}
 	});
-});
+}
 /*
  * 控制div的显示与隐藏
  */
@@ -50,7 +63,6 @@ function doAdd(){
 </script>
 </head>
 <body>
-<!-- <input type="button"  onclick="add()" value="add"/> -->
 <form id="addform" name="add" action="${pageContext.request.contextPath}/project/doAdd" method="post">
 	*name:<input type="text" name="name"/><br><br>
 	description:<input type="text" name="description"/><br><br>

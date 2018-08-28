@@ -35,13 +35,10 @@ function getConfig(){
  * 输入页面提示信息
  */
 function tips(){
-	var rs=<%=request.getAttribute("error")%>;
-	if(rs!=null){
+	var rs="<%=session.getAttribute("msg")%>";
+	if(rs!="null"){
+		<%session.removeAttribute("msg");%>
 		alert(rs);
-	}
-	var success=<%=request.getAttribute("success")%>;
-	if(success!=null){
-		alert(success);
 	}
 };
 

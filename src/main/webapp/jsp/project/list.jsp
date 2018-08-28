@@ -11,13 +11,11 @@
 </head>
 <script type="text/javascript">
 $(function(){
-	var rs=<%=request.getAttribute("error")%>;
-	if(rs!=null){
+	var rs="<%=session.getAttribute("msg")%>";
+	if(rs!="null"){
+		//删除信息，防止刷新页面的时候出现
+		<%session.removeAttribute("msg");%>
 		alert(rs);
-	}
-	var success=<%=request.getAttribute("success")%>;
-	if(success!=null){
-		alert(success);
 	}
 });
 

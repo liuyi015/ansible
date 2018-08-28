@@ -10,11 +10,15 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 </head>
 <body>
-token:<p id="token">${requestScope.tokenResult.token }</p>
-expires:<p id="expires">${requestScope.tokenResult.expires }</p>
+<%-- token:<p id="token">${requestScope.tokenResult.token }</p>
+expires:<p id="expires">${requestScope.tokenResult.expires }</p> --%>
 <a href="${pageContext.request.contextPath}/doMe">aboutMe</a>
 <a href="${pageContext.request.contextPath}/user/all">allUser</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/project/list">allProject</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/templates/list">allTemplate</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/inventory/list">allInventory</a>
 </body>
 </html>

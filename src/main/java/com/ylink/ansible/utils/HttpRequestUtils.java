@@ -127,7 +127,7 @@ public class HttpRequestUtils {
             System.out.println("Time:"+(end-begin)+"ms");
             
             int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK) {
+            if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
             	 System.out.println(EntityUtils.toString(response.getEntity(), "utf-8"));
                 return null;
             }

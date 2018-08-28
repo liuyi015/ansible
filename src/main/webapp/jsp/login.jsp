@@ -36,7 +36,7 @@ function doLogin(){
 		return false;
 	}
 	var password=$("#password").val();
-	if(password==null||username==""){
+	if(password==null||password==""){
 		alert("password不能为空");
 		return false;
 	}
@@ -47,6 +47,10 @@ function doLogin(){
 <body>
 <c:if test="${!empty requestScope.error}">
 	<p>${requestScope.error }</p>
+</c:if>
+<c:if test="${!empty sessionScope.loginMsg}">
+	<p>${sessionScope.loginMsg }</p>
+	  <%session.removeAttribute("loginMsg");%>
 </c:if>
 <form id="loginForm"  name ="loginForm" action="${pageContext.request.contextPath}/doLogin" method="post">
 username:<input type="text" name="username" id="username"/> <br>

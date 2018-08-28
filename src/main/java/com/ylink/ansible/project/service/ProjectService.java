@@ -89,7 +89,25 @@ public class ProjectService {
 		Cookie token = Common.getToken(cookies);
 		String apiUrl=API_URL+"/projects/"+id+"/";
 		String rs=HttpRequestUtils.sendHttpsRequestByDelete(apiUrl, token);
-		return null;
+		return rs;
+	}
+	/**
+	 * 根据project 的id查找project 对应的playbook
+	 * @param id
+	 * @param cookies
+	 * @return
+	 * @throws Exception 
+	 */
+
+	public String getPlaybook(Integer id, Cookie[] cookies) throws Exception {
+		String url=API_URL+"/projects/"+id +"/playbooks/";
+		Cookie token = Common.getToken(cookies);
+		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
+		if(StringUtils.isEmpty(result)) {
+			return null;
+		}
+		System.out.println(result);
+		return result;
 	}
 
 

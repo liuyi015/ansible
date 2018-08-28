@@ -50,6 +50,7 @@ public class LoginController {
 		CookieUtils.setCookie(request, response, "token_expires", tokenResult.getExpires());
 		
 		request.setAttribute("tokenResult", tokenResult);
+		request.getSession().setAttribute("userSession", user);
 		return "main";
 	}
 	

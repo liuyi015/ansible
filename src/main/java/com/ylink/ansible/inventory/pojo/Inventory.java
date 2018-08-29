@@ -8,7 +8,6 @@ public class Inventory {
 	private  Object summary_fields;
 	private String created;
 	private String modified;
-	
 	private String name;
 	private String description;
 	

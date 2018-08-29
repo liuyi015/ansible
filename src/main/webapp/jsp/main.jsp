@@ -20,5 +20,7 @@ expires:<p id="expires">${requestScope.tokenResult.expires }</p> --%>
 <a href="${pageContext.request.contextPath}/templates/list">allTemplate</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/inventory/list">allInventory</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/job/list">allJob</a>
 </body>
 </html>

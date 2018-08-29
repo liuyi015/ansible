@@ -1,4 +1,5 @@
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\inventory\pojo\Inventory.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\pojo\Job.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\credential\pojo\Credential.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\user\controller\UserController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\project\service\ProjectService.java
@@ -6,6 +7,7 @@ D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\common\C
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\inventory\controller\InventoryController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\credential\service\CredentialService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\config\controller\ConfigController.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\controller\JobController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\project\pojo\Project.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\inventory\service\InventoryService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\templates\controller\UJobTemplatesController.java
@@ -16,11 +18,15 @@ D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\config\s
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\controller\HelloController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\user\service\UserService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\common\LoginInterceptor.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\pojo\SystemJob.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\inventory\pojo\InventoryUpdate.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\utils\ConnectionManagerUtils.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\login\pojo\TokenResult.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\project\pojo\ProjectUpdate.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\login\controller\LoginController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\organization\controller\OrganizationController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\project\controller\ProjectController.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\service\JobService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\config\pojo\Config.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\templates\service\UJobTemplateService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\user\pojo\Related.java

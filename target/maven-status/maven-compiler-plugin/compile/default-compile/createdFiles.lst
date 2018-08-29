@@ -2,6 +2,8 @@ com\ylink\ansible\credential\pojo\Credential.class
 com\ylink\ansible\common\Common.class
 com\ylink\ansible\user\service\UserService.class
 com\ylink\ansible\utils\HttpRequestUtils$1.class
+com\ylink\ansible\inventory\pojo\InventoryUpdate.class
+com\ylink\ansible\job\pojo\Job.class
 com\ylink\ansible\utils\ConnectionManagerUtils$3.class
 com\ylink\ansible\organization\controller\OrganizationController.class
 com\ylink\ansible\project\controller\ProjectController.class
@@ -15,7 +17,10 @@ com\ylink\ansible\templates\pojo\Template.class
 com\ylink\ansible\utils\ConnectionManagerUtils.class
 com\ylink\ansible\credential\controller\CredentialController.class
 com\ylink\ansible\controller\HelloController.class
+com\ylink\ansible\job\controller\JobController.class
 com\ylink\ansible\credential\service\CredentialService.class
+com\ylink\ansible\job\pojo\SystemJob.class
+com\ylink\ansible\job\service\JobService.class
 com\ylink\ansible\utils\HttpRequestUtils$2.class
 com\ylink\ansible\user\controller\UserController.class
 com\ylink\ansible\utils\CookieUtils.class
@@ -24,6 +29,7 @@ com\ylink\ansible\utils\ConnectionManagerUtils$2.class
 com\ylink\ansible\templates\service\UJobTemplateService.class
 com\ylink\ansible\project\pojo\Project.class
 com\ylink\ansible\templates\controller\UJobTemplatesController.class
+com\ylink\ansible\project\pojo\ProjectUpdate.class
 com\ylink\ansible\common\LoginInterceptor.class
 com\ylink\ansible\utils\ConnectionManagerUtils$1.class
 com\ylink\ansible\inventory\controller\InventoryController.class

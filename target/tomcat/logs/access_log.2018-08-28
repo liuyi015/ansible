@@ -1,3 +1,0 @@
-0:0:0:0:0:0:0:1 - - [28/Aug/2018:17:05:33 +0800] "POST /ansible/inventory/search HTTP/1.1" 200 1366 http-bio-8081-exec-1 4234
-0:0:0:0:0:0:0:1 - - [28/Aug/2018:17:05:41 +0800] "POST /ansible/inventory/search HTTP/1.1" 200 1566 http-bio-8081-exec-4 177
-0:0:0:0:0:0:0:1 - - [28/Aug/2018:17:05:56 +0800] "POST /ansible/inventory/search HTTP/1.1" 200 1136 http-bio-8081-exec-7 99

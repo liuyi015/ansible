@@ -1,6 +1,8 @@
 package com.ylink.ansible.inventory.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +59,29 @@ public class InventoryController {
 		request.setAttribute("list", list);
 		return "inventory/list";
 	}
-	
+	/**
+	 * (do-search)根据条件查询project
+	 * @param project
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/search",method=RequestMethod.POST)
+	public String findBySearch(@ModelAttribute("inventory") Inventory inventory,HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		Map<String,Object> params=new HashMap<>();
+		if(inventory!=null) {
+			String name = inventory.getName();
+			if(StringUtils.isNotEmpty(name)) {
+				params.put("name", name);
+			}
+		}
+		//排序
+		params.put("order_by", "name");
+		List<Inventory> list = inventoryService.findInventory(params,cookies);
+		request.setAttribute("list", list);
+		return "inventory/list";
+	}
 	/**
 	 * (to-ADD)新增inventory
 	 */

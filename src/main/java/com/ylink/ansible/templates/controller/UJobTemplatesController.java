@@ -1,6 +1,8 @@
 package com.ylink.ansible.templates.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,32 @@ public class UJobTemplatesController {
 	public String toList(HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
 		List<Template> list = templateService.toList(cookies);
+		request.setAttribute("list", list);
+		return "template/list";
+	}
+	
+	/**
+	 * (do-search)根据条件查询project
+	 * @param project
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/search",method=RequestMethod.POST)
+	public String findBySearch(@ModelAttribute("template") Template template,HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		
+		Map<String,Object> params=new HashMap<>();
+		if(template!=null) {
+			String name = template.getName();
+			if(StringUtils.isNotEmpty(name)) {
+				params.put("name", name);
+			}
+			
+		}
+		//排序
+		params.put("order_by", "name");
+		List<Template> list = templateService.findTemplate(params,cookies);
 		request.setAttribute("list", list);
 		return "template/list";
 	}
@@ -72,7 +100,7 @@ public class UJobTemplatesController {
 		
 		Cookie[] cookies = request.getCookies();
 		//更新整个project
-		String rs = templateService.UpdateProject(template,cookies);
+		String rs = templateService.UpdateTemplate(template, cookies);
 		
 		if(rs==null) {
 			request.getSession().setAttribute("msg", "更新失败 ！！！！！ ");
@@ -96,7 +124,7 @@ public class UJobTemplatesController {
 	public String toDelete(@RequestParam String id,HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
 		
-		String rs = templateService.deleteProject(id,cookies);
+		String rs = templateService.deleteTemplate(id,cookies);
 		if(rs==null) {
 			request.getSession().setAttribute("msg", "删除失败 ！！！！！");
 		}else {

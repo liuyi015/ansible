@@ -41,6 +41,12 @@ function del(id){
 </script>
 <body>
 <input type="button"  onclick="add()" value="新增"/>
+<br><br>
+<form action="${pageContext.request.contextPath}/inventory/search" method="post">
+	name:<input type="text" name="name" value="${inventory.name }">
+	<input type="submit" value="查询">
+</form>
+<br><hr><br>
 <table border="1px">
 	<tr>
 		<td>id</td>

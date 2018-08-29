@@ -1,6 +1,8 @@
 package com.ylink.ansible.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -96,6 +98,34 @@ public class ProjectController {
 		}
 		
 	}
+	/**
+	 * (do-search)根据条件查询project
+	 * @param project
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/search",method=RequestMethod.POST)
+	public String findBySearch(@ModelAttribute("project") Project project,HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		Map<String,Object> params=new HashMap<>();
+		if(project!=null) {
+			String scm_type = project.getScm_type();
+			String name = project.getName();
+			
+			if(StringUtils.isNotEmpty(name)) {
+				params.put("name", name);
+			}
+			if(scm_type!=null) {
+				params.put("scm_type",scm_type);
+			}
+		}
+		//排序
+		params.put("order_by", "name");
+		List<Project> list = projectService.findProject(params,cookies);
+		request.setAttribute("list", list);
+		return "project/list";
+	}
 	
 	@RequestMapping("/toEdit")
 	public String toEdit(@RequestParam(value="id") Integer id,HttpServletRequest request) throws Exception {
@@ -108,7 +138,7 @@ public class ProjectController {
 	}
 	
 	/**
-	 * 根据ID编辑project
+	 * (do-Edit)根据ID编辑project
 	 * @param project
 	 * @param request
 	 * @param attr

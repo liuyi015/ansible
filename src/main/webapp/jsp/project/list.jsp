@@ -40,7 +40,17 @@ function del(id){
 
 </script>
 <body>
-<input type="button"  onclick="add()" value="新增"/>
+<input type="button"  onclick="add()" value="新增"/><br><br>
+
+<form action="${pageContext.request.contextPath}/project/search" method="post">
+	name:<input type="text" name="name" value="${project.name}">
+<!-- type:<select type="text" name="scm_type"> 
+		<option value=" ">Manual</option>
+		<option value="git">Git</option>
+	</select>-->
+	<input type="submit" value="查询">
+</form>
+<br><hr><br>
 <table border="1px">
 	<tr>
 		<td>id</td>
@@ -54,8 +64,8 @@ function del(id){
 		<c:forEach var="project" items="${requestScope.list}">
 			<tr>
 				<td>${project.id}</td>
-				<td>${project.name}</td>
-				<td>${project.type}</td>
+				<td>${project.name}</td> 
+				<td>${project.scm_type=='' ? 'Manual' : 'Git'}</td>
 				<td>${project.scm_revision}</td>
 				<td>${project.last_updated}</td>
 				<td><input type="button" onclick="edit(${project.id})" value="修改"/>

@@ -3,6 +3,8 @@ package com.ylink.ansible.project.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.Cookie;
 
@@ -25,7 +27,29 @@ public class ProjectService {
 	private String API_URL;
 	
 	public List<Project> toList(Cookie[] cookie) throws Exception {
-		String url=API_URL+"/projects";
+		return findProject(null, cookie);
+	}
+	/**
+	 * 根据条件查询project
+	 * @param params
+	 * @param cookie
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Project> findProject(Map<String, Object> params ,Cookie[] cookie) throws Exception {
+		String url=API_URL+"/projects/";
+		if(params!=null) {
+			//拼接url
+			boolean isFirst=true;
+			for(Entry<String, Object> entry:params.entrySet()) {
+				if(isFirst) {
+					url=url+"?"+entry.getKey()+"="+entry.getValue();
+					isFirst=false;
+				}else {
+					url=url+"&"+entry.getKey()+"="+entry.getValue();
+				}
+			}
+		}
 		Cookie token = Common.getToken(cookie);
 		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
 		if(StringUtils.isEmpty(result)) {

@@ -41,6 +41,12 @@ function del(id){
 </script>
 <body>
 <input type="button"  onclick="add()" value="新增 JOB TEMPLATE"/>
+<br><br>
+<form action="${pageContext.request.contextPath}/templates/search" method="post">
+	name:<input type="text" name="name" value="${template.name }">
+	<input type="submit" value="查询">
+</form>
+<br><hr><br>
 <table border="1px">
 	<tr>
 		<td>id</td>

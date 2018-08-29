@@ -1,8 +1,11 @@
 package com.ylink.ansible.templates.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.Cookie;
 
@@ -24,23 +27,13 @@ public class UJobTemplateService {
 	@Value("${API_URL}")
 	private String API_URL;
 	
-	public List<Template> toList(Cookie[] cookie) throws Exception {
+	public List<Template> toList(Cookie[] cookies) throws Exception {
 		String url=API_URL+"/unified_job_templates/?page_size=20&order_by=name&type=workflow_job_template,job_template";
-		Cookie token = Common.getToken(cookie);
-		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
-		if(StringUtils.isEmpty(result)) {
-			return null;
-		}
-		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
-		List<Template> list=new ArrayList<>();
-		Iterator<Template> it = results.iterator();
-		while(it.hasNext()) {
-			Template template = (Template) JSONObject.toBean(JSONObject.fromObject(it.next()), Template.class);
-			list.add(template);
-		}
 		
-		System.out.println(list.toString());
-		return list;
+		/*Map<String, Object> params=new HashMap<>();
+		params.put("order_by", "name");
+		params.put("type", "workflow_job_template,job_template");*/
+		return findTemplate(null, cookies);
 	}
 
 	public String addTemplate(Template template, Cookie[] cookies) throws Exception {
@@ -62,7 +55,14 @@ public class UJobTemplateService {
 		return template;
 	}
 
-	public String UpdateProject(Template template, Cookie[] cookies) throws Exception {
+	/**
+	 * 更新job_templates
+	 * @param template
+	 * @param cookies
+	 * @return
+	 * @throws Exception
+	 */
+	public String UpdateTemplate(Template template, Cookie[] cookies) throws Exception {
 		Cookie token = Common.getToken(cookies);
 		String apiUrl=API_URL+"/job_templates/"+template.getId()+"/";    
 		JSONObject json = JSONObject.fromObject(template);
@@ -70,11 +70,50 @@ public class UJobTemplateService {
 		return rs;
 	}
 
-	public String deleteProject(String id, Cookie[] cookies) throws Exception {
+	/**
+	 * 删除job_templates
+	 * @param id
+	 * @param cookies
+	 * @return
+	 * @throws Exception
+	 */
+	public String deleteTemplate(String id, Cookie[] cookies) throws Exception {
 		Cookie token = Common.getToken(cookies);
 		String apiUrl=API_URL+"/job_templates/"+id+"/";    
 		String rs = HttpRequestUtils.sendHttpsRequestByDelete(apiUrl, token);
 		return rs;
+	}
+
+	/**
+	 * 根据查询条件查询job_template
+	 * @param params
+	 * @param cookies
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Template> findTemplate(Map<String, Object> params, Cookie[] cookies) throws Exception {
+		String url=API_URL+"/unified_job_templates/?order_by=name&type=workflow_job_template,job_template";
+		Cookie token = Common.getToken(cookies);
+		if(params!=null) {
+			//拼接url
+			for(Entry<String, Object> entry:params.entrySet()) {
+					url=url+"&"+entry.getKey()+"="+entry.getValue();
+			}
+		}
+		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
+		if(StringUtils.isEmpty(result)) {
+			return null;
+		}
+		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
+		List<Template> list=new ArrayList<>();
+		Iterator<Template> it = results.iterator();
+		while(it.hasNext()) {
+			Template template = (Template) JSONObject.toBean(JSONObject.fromObject(it.next()), Template.class);
+			list.add(template);
+		}
+		
+		System.out.println(list.toString());
+		return list;
 	}
 
 }

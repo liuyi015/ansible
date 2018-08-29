@@ -37,8 +37,10 @@ public class CredentialService {
 			if(isFirst) {
 				url=url+"?"+entry.getKey()+"="+entry.getValue();
 				isFirst=false;
+			}else {
+				url=url+"&"+entry.getKey()+"="+entry.getValue();
 			}
-			url=url+"&"+entry.getKey()+"="+entry.getValue();
+			
 		}
 		
 		Cookie token = Common.getToken(cookies);

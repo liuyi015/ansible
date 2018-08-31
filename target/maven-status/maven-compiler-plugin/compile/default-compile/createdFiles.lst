@@ -20,10 +20,12 @@ com\ylink\ansible\controller\HelloController.class
 com\ylink\ansible\job\controller\JobController.class
 com\ylink\ansible\credential\service\CredentialService.class
 com\ylink\ansible\job\pojo\SystemJob.class
+com\ylink\ansible\job\pojo\RunResult.class
 com\ylink\ansible\job\service\JobService.class
 com\ylink\ansible\utils\HttpRequestUtils$2.class
 com\ylink\ansible\user\controller\UserController.class
 com\ylink\ansible\utils\CookieUtils.class
+com\ylink\ansible\pojo\SummaryField.class
 com\ylink\ansible\login\controller\LoginController.class
 com\ylink\ansible\utils\ConnectionManagerUtils$2.class
 com\ylink\ansible\templates\service\UJobTemplateService.class

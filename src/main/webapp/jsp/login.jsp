@@ -10,6 +10,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 </head>
 <script type="text/javascript">
+
 function login(){
 	var user={
 			username:$("#username").val(),

@@ -32,6 +32,8 @@ D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\template
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\user\pojo\Related.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\utils\HttpRequestUtils.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\credential\controller\CredentialController.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\pojo\SummaryField.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\pojo\RunResult.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\organization\pojo\Organization.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\templates\pojo\Template.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\user\pojo\User.java

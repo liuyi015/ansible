@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ylink.ansible.common.Common;
+import com.ylink.ansible.job.pojo.Job;
+import com.ylink.ansible.job.pojo.RunResult;
 import com.ylink.ansible.project.pojo.Project;
 import com.ylink.ansible.templates.pojo.Template;
 import com.ylink.ansible.utils.HttpRequestUtils;
@@ -114,6 +116,15 @@ public class UJobTemplateService {
 		
 		System.out.println(list.toString());
 		return list;
+	}
+
+	public RunResult runTemplate(String id, Cookie[] cookies) throws Exception {
+		Cookie token = Common.getToken(cookies);
+		String apiUrl=API_URL+"/job_templates/"+id+"/launch/";    
+		JSONObject json=JSONObject.fromObject("{}");
+		String rs = HttpRequestUtils.sendHttpsRequestByPostAndCookie(apiUrl, json, token);
+		RunResult runResult=(RunResult) JSONObject.toBean(JSONObject.fromObject(rs), RunResult.class);
+		return runResult;
 	}
 
 }

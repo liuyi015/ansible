@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ylink.ansible.job.pojo.Job;
+import com.ylink.ansible.job.pojo.RunResult;
 import com.ylink.ansible.project.pojo.Project;
 import com.ylink.ansible.templates.pojo.Template;
 import com.ylink.ansible.templates.service.UJobTemplateService;
@@ -133,4 +135,12 @@ public class UJobTemplatesController {
 		return "redirect:/templates/list";
 	}
 
+	@RequestMapping("/run")
+	public String run(@RequestParam String id,HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		
+		RunResult runResult = templateService.runTemplate(id,cookies);
+		request.setAttribute("run", runResult);
+		return "template/run";
+	}
 }

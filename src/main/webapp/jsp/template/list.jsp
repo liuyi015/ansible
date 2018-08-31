@@ -37,6 +37,10 @@ function del(id){
 	location.href=url;
 }
 
+function run(id){
+	var url="${pageContext.request.contextPath}/templates/run?id="+id;
+	location.href=url;
+}
 
 </script>
 <body>
@@ -66,7 +70,8 @@ function del(id){
 				<td>${template.description}</td>
 				<td>${template.status}</td>
 				<td></td>
-				<td><input type="button" onclick="edit(${template.id})" value="修改"/>
+				<td><input type="button" onclick="run(${template.id})" value="运行"/>
+				<input type="button" onclick="edit(${template.id})" value="修改"/>
 				<input type="button"  onclick="del(${template.id})" value="删除"/></td>
 			</tr>
 		</c:forEach>

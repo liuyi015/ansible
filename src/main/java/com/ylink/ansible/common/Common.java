@@ -18,7 +18,7 @@ public class Common {
 		            break;
 		    }
 		}
-		System.out.println("从cookies中取出的token:"+tokenCookie.getValue());
+		/*System.out.println("从cookies中取出的token:"+tokenCookie.getValue());*/
 		return tokenCookie;
 	}
 }

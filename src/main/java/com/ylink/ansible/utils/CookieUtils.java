@@ -151,7 +151,8 @@ public final class CookieUtils {
             	String domainName = getDomainName(request);
             	System.out.println(domainName);
                 if (!"localhost".equals(domainName)) {
-                	cookie.setDomain(domainName);
+//                注释原因：用本机ip做访问时后去不到cookie
+                //	cookie.setDomain(domainName);
                 }
             }
             cookie.setPath("/");

@@ -14,10 +14,10 @@ var id;   //全局变量，定时器
 
 $(function(){
 	var url="https://172.168.65.88"+'${run.url}';
-	getStatus(url);
+	//getStatus(url);
 	var status=$("#status").html();
 	if("successful"!= status && "failed"!= status){
-		var referId = window.setInterval(getStatus,10000,url);    //创建一个定时任务
+		var referId = window.setInterval(getStatus,5000,url);    //创建一个定时任务
 		 id=referId;            //把定时任务赋值给全局变量，方便后面关闭定时任务，在关闭时不会报（referId未定义错误）
 	}
 	
@@ -26,13 +26,13 @@ $(function(){
 function getStatus(apiurl){
 	$.ajax({
 		type:"get",
-		async:false, //同步请求
+		//async:false, //同步请求
 		url:"${pageContext.request.contextPath}/job/getStatus",
 		data:{'url':apiurl},
 		success:function(data){
 			var jsonDate=JSON.parse(data); 
 			var status=jsonDate.status;
-			alert(status);
+			//alert(status);
 			if("successful" == status || "failed"== status){
 				$("#status").html(status);
 				$("#result").val(jsonDate.result_stdout);
@@ -68,7 +68,7 @@ function getStatus(apiurl){
 <c:if test="${run.type =='job'}">
 <div>
 	<h4>详情：</h4>
-	<div id="statusDiv"></div>
+	
 	<table>
 	<tr><td>状态:<td><td id="status">${run.status}</td></tr>
 	</table>

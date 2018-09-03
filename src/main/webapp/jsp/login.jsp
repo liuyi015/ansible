@@ -1,16 +1,12 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" language="java"%>
-<!-- 引入springmvc标签库，才能解析 ${pageContext.request.contextPath}-->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
 <title>ansibleTest</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
-</head>
 <script type="text/javascript">
-
 function login(){
 	var user={
 			username:$("#username").val(),
@@ -45,6 +41,7 @@ function doLogin(){
 	$("#loginForm").submit();
 }
 </script>
+</head>
 <body>
 <c:if test="${!empty requestScope.error}">
 	<p>${requestScope.error }</p>

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ylink.ansible.group.pojo.Group;
+import com.ylink.ansible.host.pojo.Host;
 import com.ylink.ansible.inventory.pojo.Inventory;
 import com.ylink.ansible.inventory.service.InventoryService;
 import com.ylink.ansible.project.pojo.Project;
@@ -156,6 +158,23 @@ public class InventoryController {
 			request.getSession().setAttribute("msg", "删除失败！！！！！！");
 		}
 		return "redirect:/inventory/list";
+	}
+	/**
+	 * 查看group和host
+	 * @param id(inventory 的ID)
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/view")
+	public String view(@RequestParam("id") Integer id,HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		List<Group> rootGrops=inventoryService.getRootGroups(id, cookies);
+		List<Host> hosts=inventoryService.gethosts(id, cookies);
+		request.setAttribute("inventory", id);
+		request.setAttribute("rootGrops", rootGrops);
+		request.setAttribute("hosts", hosts);
+		return "inventory/view";
 	}
 	
 }

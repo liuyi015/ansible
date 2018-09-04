@@ -80,6 +80,10 @@ $(function(){
 });
 </script>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<a href="${pageContext.request.contextPath}/project/list" >返回上一页</a>
+<br><hr>
 <form id="add" name="add" action="${pageContext.request.contextPath}/project/doEdit" method="put">
 	<input type="hidden" name="id" value="${project.id }"/>
 	*name:<input type="text" name="name" value="${project.name}"></input><br><br>

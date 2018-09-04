@@ -17,7 +17,7 @@ $(function(){
 	//getStatus(url);
 	var status=$("#status").html();
 	if("successful"!= status && "failed"!= status){
-		var referId = window.setInterval(getStatus,5000,url);    //创建一个定时任务
+		var referId = window.setInterval(getStatus,3000,url);    //创建一个定时任务
 		 id=referId;            //把定时任务赋值给全局变量，方便后面关闭定时任务，在关闭时不会报（referId未定义错误）
 	}
 	
@@ -45,6 +45,10 @@ function getStatus(apiurl){
 }
 </script>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<a href="${pageContext.request.contextPath}/templates/list" >返回上一页</a>
+<br>
 <hr>
 <c:if test="${run.type =='inventory_update'}">
 <div>

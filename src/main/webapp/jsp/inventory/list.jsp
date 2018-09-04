@@ -24,6 +24,11 @@ function add(){
 	location.href=url;
 };
 
+function view(id){
+	var url="${pageContext.request.contextPath}/inventory/view?id="+id;
+	location.href=url;
+};
+
 function edit(id){
 	var url="${pageContext.request.contextPath}/inventory/toEdit?id="+id;
 	location.href=url;
@@ -40,6 +45,9 @@ function del(id){
 
 </script>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<br><hr>
 <input type="button"  onclick="add()" value="新增"/>
 <br><br>
 <form action="${pageContext.request.contextPath}/inventory/search" method="post">
@@ -59,8 +67,9 @@ function del(id){
 			<tr>
 				<td>${inventory.id}</td>
 				<td>${inventory.name}</td>
-				<td>${inventory.organization}</td>
-				<td><input type="button" onclick="edit(${inventory.id})" value="修改"/>
+				<td>${inventory.summary_fields.organization.name}</td>
+				<td><input type="button" onclick="view(${inventory.id})" value="查看详情"/>
+				<input type="button" onclick="edit(${inventory.id})" value="修改"/>
 				<input type="button"  onclick="del(${inventory.id})" value="删除"/></td>
 			</tr>
 		</c:forEach>

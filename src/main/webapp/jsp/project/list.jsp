@@ -40,8 +40,11 @@ function del(id){
 
 </script>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<br><hr>
+<!--查询操作  -->
 <input type="button"  onclick="add()" value="新增"/><br><br>
-
 <form action="${pageContext.request.contextPath}/project/search" method="post">
 	name:<input type="text" name="name" value="${project.name}">
 <!-- type:<select type="text" name="scm_type"> 

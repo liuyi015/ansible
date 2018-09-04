@@ -1,11 +1,13 @@
 package com.ylink.ansible.inventory.pojo;
 
+import com.ylink.ansible.pojo.SummaryField;
+
 public class Inventory {
 	private Integer id;
 	private String type;
 	private String url;
 	private  Object related;
-	private  Object summary_fields;
+	private  SummaryField summary_fields;
 	private String created;
 	private String modified;
 	private String name;
@@ -46,11 +48,11 @@ public class Inventory {
 		this.related = related;
 	}
 
-	public Object getSummary_fields() {
+	public final SummaryField getSummary_fields() {
 		return summary_fields;
 	}
 
-	public void setSummary_fields(Object summary_fields) {
+	public final void setSummary_fields(SummaryField summary_fields) {
 		this.summary_fields = summary_fields;
 	}
 

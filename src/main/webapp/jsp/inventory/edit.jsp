@@ -54,6 +54,10 @@ $(function(){
 });
 </script>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<a href="${pageContext.request.contextPath}/inventory/list" >返回上一页</a>
+<br><hr>
 <form id="add" name="add" action="${pageContext.request.contextPath}/inventory/doEdit" method="put">
 	<input type="hidden" name="id" value="${inventory.id }"/>
 	*name:<input type="text" name="name" value="${inventory.name}"></input><br><br>
@@ -61,7 +65,6 @@ $(function(){
 	*organization:<select  id="organization" name="organization"><option value="">请选择</option></select><br><br>
 	<input type="submit" value="提交" />
 </form>
-
 
 </body>
 </html>

@@ -44,6 +44,9 @@ function run(id){
 
 </script>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<br><hr>
 <input type="button"  onclick="add()" value="新增 JOB TEMPLATE"/>
 <br><br>
 <form action="${pageContext.request.contextPath}/templates/search" method="post">
@@ -57,8 +60,7 @@ function run(id){
 		<td>name</td>
 		<td>type</td>
 		<td>description</td>
-		<td>activity</td>
-		<td>labeles</td>
+		<td>修改时间</td>
 		<td>操作</td>
 	</tr>
 	<c:if test="${requestScope.list !=null}">
@@ -68,8 +70,7 @@ function run(id){
 				<td>${template.name}</td>
 				<td>${template.type}</td>
 				<td>${template.description}</td>
-				<td>${template.status}</td>
-				<td></td>
+				<td>${template.modified}</td>
 				<td><input type="button" onclick="run(${template.id})" value="运行"/>
 				<input type="button" onclick="edit(${template.id})" value="修改"/>
 				<input type="button"  onclick="del(${template.id})" value="删除"/></td>

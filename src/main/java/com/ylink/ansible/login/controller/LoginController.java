@@ -35,6 +35,11 @@ public class LoginController {
 		return "login";
 	}
 	
+	@RequestMapping("/main")
+	public String index() {
+		return "main";
+	}
+	
 	@RequestMapping(value="/doLogin",method=RequestMethod.POST)
 	public String doLogin(User user ,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String token = loginService.login(user);

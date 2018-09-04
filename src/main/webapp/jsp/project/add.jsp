@@ -63,6 +63,10 @@ function doAdd(){
 </script>
 </head>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<a href="${pageContext.request.contextPath}/project/list" >返回上一页</a>
+<br><hr>
 <form id="addform" name="add" action="${pageContext.request.contextPath}/project/doAdd" method="post">
 	*name:<input type="text" name="name"/><br><br>
 	description:<input type="text" name="description"/><br><br>

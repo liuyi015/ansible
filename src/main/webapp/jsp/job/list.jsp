@@ -35,6 +35,9 @@ function del(id,type){
 
 </script>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<br><hr>
 <form action="${pageContext.request.contextPath}/job/search" method="post">
 	name:<input type="text" name="name" value="${name }">
 	<input type="submit" value="查询">

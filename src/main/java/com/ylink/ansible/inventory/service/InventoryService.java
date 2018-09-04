@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ylink.ansible.common.Common;
+import com.ylink.ansible.group.pojo.Group;
+import com.ylink.ansible.host.pojo.Host;
 import com.ylink.ansible.inventory.pojo.Inventory;
 import com.ylink.ansible.project.pojo.Project;
 import com.ylink.ansible.utils.HttpRequestUtils;
@@ -137,6 +139,44 @@ public class InventoryService {
 		}
 		
 		System.out.println(list.toString());
+		return list;
+	}
+
+	public List<Group> getRootGroups(Integer id, Cookie[] cookies) throws Exception {
+		String apiUrl=API_URL+"/inventories/"+id+"/root_groups/?order_by=name";
+		Cookie token = Common.getToken(cookies);
+		String rs = HttpRequestUtils.sendHttpsRequestByGet(apiUrl, token);
+		
+		List<Group> list=new ArrayList<>();
+		if(StringUtils.isEmpty(rs)) {
+			return null;
+		}
+		JSONArray results = JSONObject.fromObject(rs).getJSONArray("results");
+		Iterator<Project> it = results.iterator();
+		while(it.hasNext()) {
+			Group group = (Group) JSONObject.toBean(JSONObject.fromObject(it.next()), Group.class);
+			list.add(group);
+		}
+		
+		return list;
+	}
+
+	public List<Host> gethosts(Integer id, Cookie[] cookies) throws Exception {
+		String apiUrl=API_URL+"/inventories/"+id+"/hosts/?order_by=name";
+		Cookie token = Common.getToken(cookies);
+		String rs = HttpRequestUtils.sendHttpsRequestByGet(apiUrl, token);
+		
+		List<Host> list=new ArrayList<>();
+		if(StringUtils.isEmpty(rs)) {
+			return null;
+		}
+		JSONArray results = JSONObject.fromObject(rs).getJSONArray("results");
+		Iterator<Project> it = results.iterator();
+		while(it.hasNext()) {
+			Host host = (Host) JSONObject.toBean(JSONObject.fromObject(it.next()), Host.class);
+			list.add(host);
+		}
+		
 		return list;
 	}
 

@@ -1,15 +1,15 @@
 package com.ylink.ansible.pojo;
 
-import javax.jws.soap.SOAPBinding.Use;
-
 import com.ylink.ansible.credential.pojo.Credential;
 import com.ylink.ansible.inventory.pojo.Inventory;
+import com.ylink.ansible.organization.pojo.Organization;
 import com.ylink.ansible.project.pojo.Project;
 import com.ylink.ansible.project.pojo.ProjectUpdate;
 import com.ylink.ansible.templates.pojo.Template;
 import com.ylink.ansible.user.pojo.User;
 
 public class SummaryField {
+	private Organization organization;
 	private Template job_template;
 	private Inventory inventory;
 	private Credential credential;
@@ -20,8 +20,21 @@ public class SummaryField {
 	private User modified_by;
 	private Object user_capabilities;
 	private Object labels;
+	private Object object_roles;
 	
 	
+	public final Organization getOrganization() {
+		return organization;
+	}
+	public final void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+	public final Object getObject_roles() {
+		return object_roles;
+	}
+	public final void setObject_roles(Object object_roles) {
+		this.object_roles = object_roles;
+	}
 	public final ProjectUpdate getProject_update() {
 		return project_update;
 	}

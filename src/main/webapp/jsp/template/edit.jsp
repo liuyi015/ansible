@@ -139,6 +139,10 @@ $(function(){
 </script>
 </head>
 <body>
+<!-- 返回主页 -->
+<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
+<a href="${pageContext.request.contextPath}/templates/list" >返回上一页</a>
+<br><hr>
 <form id="editform" name="edit" action="${pageContext.request.contextPath}/templates/doEdit" method="post">
 	<input type="hidden" name="id" value="${template.id }"/>
 	*name:<input type="text" name="name"  value="${template.name }"/><br><br>

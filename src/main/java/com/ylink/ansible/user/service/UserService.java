@@ -48,4 +48,33 @@ public class UserService {
 		return rs;
 	}
 
+	public User findById(Integer id, Cookie[] cookies) throws Exception {
+		Cookie token = Common.getToken(cookies);
+		String apiUrl=baseUrl+"/users/"+id+"/";
+		String rs = HttpRequestUtils.sendHttpsRequestByGet(apiUrl, token);
+		if(rs!=null) {
+			User user = (User) JSONObject.toBean(JSONObject.fromObject(rs), User.class);
+			return user;
+		}
+		return null;
+	}
+
+	public String UpdateUser(User user, Cookie[] cookies) throws Exception {
+		Cookie token = Common.getToken(cookies);
+		String apiUrl=baseUrl+"/users/"+user.getId()+"/";
+		JSONObject userJson = JSONObject.fromObject(user);
+		if(StringUtils.isEmpty(user.getPassword())) {
+			userJson.remove("password");
+		}
+		String rs = HttpRequestUtils.sendHttpsRequestByPutAndCookie(apiUrl, userJson, token);
+		return rs;
+	}
+
+	public String deleteById(Integer id, Cookie[] cookies) throws Exception {
+		Cookie token = Common.getToken(cookies);
+		String apiUrl=baseUrl+"/users/"+id+"/";
+		String rs = HttpRequestUtils.sendHttpsRequestByDelete(apiUrl, token);
+		return rs;
+	}
+
 }

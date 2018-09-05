@@ -21,7 +21,16 @@ public class User {
 	public String ldap_dn;
 	public User external_account;
 	public String[] auth;
+	//自己创建，方便前台传值
+	public String user_type;
 	
+	
+	public final String getUser_type() {
+		return user_type;
+	}
+	public final void setUser_type(String user_type) {
+		this.user_type = user_type;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -58,13 +67,13 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public boolean isIs_superuser() {
+	public boolean getIs_superuser() {
 		return is_superuser;
 	}
 	public void setIs_superuser(boolean is_superuser) {
 		this.is_superuser = is_superuser;
 	}
-	public boolean isIs_system_auditor() {
+	public boolean getIs_system_auditor() {
 		return is_system_auditor;
 	}
 	public void setIs_system_auditor(boolean is_system_auditor) {

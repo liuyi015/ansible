@@ -16,6 +16,8 @@ expires:<p id="expires">${requestScope.tokenResult.expires }</p> --%>
 <br><br>
 <a href="${pageContext.request.contextPath}/user/all">allUser</a>
 <br><br>
+<a href="${pageContext.request.contextPath}/playbook/toAdd">新建playbook</a>
+<br><br>
 <a href="${pageContext.request.contextPath}/project/list">allProject</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/templates/list">allTemplate</a>

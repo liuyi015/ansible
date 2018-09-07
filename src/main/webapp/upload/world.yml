@@ -1,0 +1,7 @@
+---
+- hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: helloword.
+    shell: echo "Hello World"  > /tmp/hello.log

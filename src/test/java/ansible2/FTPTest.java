@@ -2,6 +2,8 @@ package ansible2;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,8 +37,27 @@ public class FTPTest {
 			if(session != null)session.disconnect();
 		}
 	}
-	@Test
+	/*@Test
 	public void test2() throws IOException {
 		SFTPUtil.replaceFileStr("D:/hello.yml", "D:/helloTest.yml");
+		
+	}*/
+	
+	@Test
+	public void testDate() {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSS");
+		System.out.println(format.format(date));
+		System.out.println(date.getTime());
+		System.out.println(date.getDate());
+		System.out.println(date.getYear());
+		System.out.println(date.getHours());
+		System.out.println(date.getDay());
+		System.out.println(date.getMinutes());
+		System.out.println(date.getSeconds());
+		System.out.println(date.getTimezoneOffset());
+		
 	}
+	
 }
+

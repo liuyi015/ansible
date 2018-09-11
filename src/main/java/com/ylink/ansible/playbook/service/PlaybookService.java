@@ -3,6 +3,8 @@ package com.ylink.ansible.playbook.service;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.Session;
 import com.ylink.ansible.common.FileUtil;
 import com.ylink.ansible.common.SFTPUtil;
+import com.ylink.ansible.playbook.pojo.Parameter;
 import com.ylink.ansible.playbook.pojo.Playbook;
 
 @Service
@@ -24,6 +27,8 @@ public class PlaybookService {
 	//模板存放地址
 	@Value("${PLAYBOOK_PATH}")
 	private String PLAYBOOK_PATH;
+	@Value("${vars_path}")
+	private String vars_path;
 	//项目存放地址
 	@Value("${PROJECTS_PATH}")
 	private String PROJECTS_PATH;
@@ -71,9 +76,12 @@ public class PlaybookService {
 		String saveFilePath =request.getServletContext().getRealPath("download");
 		String saveFile =saveFilePath+File.separator+filename;
 		
-		new Date().getYear();
 		String directory=PROJECTS_PATH+playbook.getFolder();    //要上传的playbook的根路径
-		String newFile=request.getServletContext().getRealPath("upload")+File.separator+filename;
+		String[] split = filename.split("\\.");
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSS");
+		String newFileName = split[0]+format.format(new Date())+"."+split[1];
+		System.out.println(newFileName);
+		String newFile=request.getServletContext().getRealPath("upload")+File.separator+newFileName;
 		
 		Session session = null;
 		ChannelSftp sftp = null;
@@ -102,6 +110,35 @@ public class PlaybookService {
 			if(session != null)session.disconnect();
 		}
 		return upload;
+	}
+
+	public List<Parameter> readFile(String fileName,HttpServletRequest request) {
+		String srcFile =PLAYBOOK_PATH+fileName;   //playbook模板的服务器地址
+		
+		String saveFilePath =request.getServletContext().getRealPath("download");
+		String saveFile =saveFilePath+File.separator+fileName;
+		Session session = null;
+		ChannelSftp sftp = null;
+		List<Parameter> list=null;
+		try {
+			session = SFTPUtil.connect(HOST, PROT, USER, PASSWORD,TIMEOUT);
+			Channel channel = session.openChannel("sftp");
+			channel.connect();
+			sftp = (ChannelSftp) channel;
+			//1、下载playbook模板
+			Boolean rs = SFTPUtil.download(srcFile, saveFilePath, sftp);
+			if(rs) {
+				//2、读playbook模板
+				 list=FileUtil.readFile(saveFile);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(sftp != null)sftp.disconnect();
+			if(session != null)session.disconnect();
+		}
+		return list;
 	}
 
 }

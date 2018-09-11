@@ -1,9 +1,16 @@
 package com.ylink.ansible.playbook.pojo;
 
 public class Parameter {
+	private String name;
 	private String parameter_name;
 	private String parameter_value;
 	
+	public final String getName() {
+		return name;
+	}
+	public final void setName(String name) {
+		this.name = name;
+	}
 	public final String getParameter_name() {
 		return parameter_name;
 	}

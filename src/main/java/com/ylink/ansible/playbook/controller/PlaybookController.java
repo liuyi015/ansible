@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ylink.ansible.playbook.pojo.Parameter;
 import com.ylink.ansible.playbook.pojo.Playbook;
 import com.ylink.ansible.playbook.service.PlaybookService;
 
@@ -24,7 +26,7 @@ public class PlaybookController {
 
 	@RequestMapping("/toAdd")
 	public String toAdd() {
-		return "playbook/add";
+		return "playbook/toAdd";
 	}
 	
 	@RequestMapping("/getPBPackage")
@@ -41,10 +43,21 @@ public class PlaybookController {
 		return JSONArray.fromObject(rs).toString();
 	}
 	
+	@RequestMapping("/readFile")
+	public String readFile(String fileName,HttpServletRequest request) {
+		
+		if(StringUtils.isNotEmpty(fileName)) {
+			List<Parameter> list=palybookService.readFile(fileName, request);
+			request.setAttribute("list", list);
+		}
+		return "playbook/palybook";
+	}
+	
 	@RequestMapping("/doAdd")
 	public String addPlaybook(Playbook playbook,HttpServletRequest request) {
 		palybookService.addPlaybook(playbook,request);
 		return "redirect:/playbook/toAdd";
 		
 	}
+	
 }

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ylink.ansible.playbook.pojo.Parameter;
@@ -70,4 +71,42 @@ public class FileUtil {
 		return true;
 	}
 
+	/**
+	 * 读取变量文件（键对值格式：name:parameter_name）
+	 * @param srcFile
+	 * @return
+	 * @throws IOException
+	 */
+	public static List<Parameter> readFile(String srcFile) throws  IOException{
+		long starttime=System.currentTimeMillis();
+		
+		File file1=new File(srcFile);//读取文件
+		if(!file1.isFile()) {
+			System.out.println(srcFile+"不是文件");
+			return null;
+		}
+		FileReader fr =new FileReader(file1);
+		BufferedReader br=new BufferedReader(fr);
+		List<Parameter> list=new ArrayList<>();
+		try {
+			String temp=null;
+			//读取数据
+			while((temp=br.readLine())!=null){ 
+				System.out.println(temp);
+				String[] split = temp.split(":");
+				Parameter parameter = new Parameter();
+				parameter.setName(split[0]);
+				parameter.setParameter_name(split[1]);
+				list.add(parameter);
+			}
+			br.close();
+		} catch (IOException e) {
+			br.close();
+			e.printStackTrace();
+		}
+		long endtime=System.currentTimeMillis();
+		System.out.println("总耗时："+(endtime-starttime)+"ms");
+		return list;
+	}
+	
 }

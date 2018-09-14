@@ -28,34 +28,59 @@ public class PlaybookController {
 	public String toAdd() {
 		return "playbook/toAdd";
 	}
-	
+	/**
+	 * 获取playbook模板目录
+	 * @return
+	 */
 	@RequestMapping("/getPBPackage")
 	@ResponseBody
 	public String getPBPackage() {
 		List rs=palybookService.getPBTemp(null);
 		return JSONArray.fromObject(rs).toString();
 	}
-	
+	/**
+	 * 获取具体playbook模板问价夹地址
+	 */
 	@RequestMapping("/getPBTemp")
 	@ResponseBody
 	public String getPBTemp(String uri) {
 		List rs=palybookService.getPBTemp(uri);
 		return JSONArray.fromObject(rs).toString();
 	}
-	
+	/**
+	 * 读取变量文件，获取变量信息
+	 * @param uri
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/readFile")
-	public String readFile(String fileName,HttpServletRequest request) {
+	public String readFile(String uri,HttpServletRequest request) {
 		
-		if(StringUtils.isNotEmpty(fileName)) {
-			List<Parameter> list=palybookService.readFile(fileName, request);
+		if(StringUtils.isNotEmpty(uri)) {
+			List<Parameter> list=palybookService.readFile(uri, request);
 			request.setAttribute("list", list);
 		}
-		return "playbook/palybook";
+		return "playbook/playbook";
+	}
+	
+	@RequestMapping("/checkProjectName")
+	@ResponseBody
+	public String checkProjectName(String projectName) {
+		if(StringUtils.isEmpty(projectName)) {
+			return JSONObject.fromObject("false").toString();
+		}
+		Boolean rs=palybookService.checkProjectName(projectName);
+		return JSONArray.fromObject(rs).toString();
 	}
 	
 	@RequestMapping("/doAdd")
 	public String addPlaybook(Playbook playbook,HttpServletRequest request) {
-		palybookService.addPlaybook(playbook,request);
+		Boolean rs = palybookService.addPlaybook(playbook,request);
+		if(rs) {
+			request.getSession().setAttribute("msg", "新建成功！！！");
+		}else {
+			request.getSession().setAttribute("msg", "新建失败！！！");
+		}
 		return "redirect:/playbook/toAdd";
 		
 	}

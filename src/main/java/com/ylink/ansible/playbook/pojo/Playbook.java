@@ -6,7 +6,16 @@ public class Playbook {
 
 	private String folder;
 	private String playbook;
+	private String peoject_name;
 	private List<Parameter> parameter;
+	
+	
+	public final String getPeoject_name() {
+		return peoject_name;
+	}
+	public final void setPeoject_name(String peoject_name) {
+		this.peoject_name = peoject_name;
+	}
 	public final String getFolder() {
 		return folder;
 	}

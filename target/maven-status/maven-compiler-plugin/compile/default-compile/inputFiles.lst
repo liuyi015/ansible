@@ -34,6 +34,7 @@ D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\config\c
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\group\service\GroupService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\inventory\service\InventoryService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\login\service\LoginService.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\common\SSHResInfo.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\host\controller\HostController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\host\service\HostService.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\pojo\SystemJob.java

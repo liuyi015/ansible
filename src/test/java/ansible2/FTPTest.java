@@ -59,5 +59,15 @@ public class FTPTest {
 		
 	}
 	
+	@Test
+	public void testexe() {
+		String s="cp -r Templates test01";
+		String a="ls";
+		String b="cd test";
+		String d="cd /var/lib/awx/projects;ls";
+		
+		SFTPUtil.exeCommand("172.168.65.88", 22, "root", "root1234", 30000, d);
+	}
+	
 }
 

@@ -28,6 +28,7 @@ com\ylink\ansible\common\FileUtil.class
 com\ylink\ansible\common\Common.class
 com\ylink\ansible\utils\HttpRequestUtils$1.class
 com\ylink\ansible\inventory\pojo\InventoryUpdate.class
+com\ylink\ansible\common\SSHResInfo.class
 com\ylink\ansible\job\pojo\Job.class
 com\ylink\ansible\organization\controller\OrganizationController.class
 com\ylink\ansible\group\controller\GroupController.class

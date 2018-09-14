@@ -38,7 +38,8 @@ function getStatus(apiurl){
 				$("#result").val(jsonDate.result_stdout);
 				window.clearInterval(id);   //关闭定时器
 			}else{
-				$("#status").html(status+",请等待。。。。");
+				$("#status").html(status+",请等待.......");
+				$("#result").val(jsonDate.result_stdout);
 			}
 		}
 	});

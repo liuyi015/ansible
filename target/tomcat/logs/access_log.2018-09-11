@@ -1,6 +1,0 @@
-0:0:0:0:0:0:0:1 - - [11/Sep/2018:15:29:02 +0800] "GET /ansible/login HTTP/1.1" 200 1675 http-bio-8081-exec-1 1929
-0:0:0:0:0:0:0:1 - - [11/Sep/2018:15:29:03 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8081-exec-3 0
-0:0:0:0:0:0:0:1 - - [11/Sep/2018:15:29:51 +0800] "POST /ansible/doLogin HTTP/1.1" 200 643 http-bio-8081-exec-5 1311
-0:0:0:0:0:0:0:1 - - [11/Sep/2018:15:29:54 +0800] "GET /ansible/playbook/toAdd HTTP/1.1" 200 2951 http-bio-8081-exec-8 166
-0:0:0:0:0:0:0:1 - - [11/Sep/2018:15:29:57 +0800] "GET /ansible/playbook/getPBPackage HTTP/1.1" 200 18 http-bio-8081-exec-10 2062
-0:0:0:0:0:0:0:1 - - [11/Sep/2018:16:07:33 +0800] "GET /ansible/playbook/getPBTemp?uri=hello HTTP/1.1" 200 21 http-bio-8081-exec-1 2667

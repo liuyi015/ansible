@@ -55,6 +55,8 @@ public class FileUtil {
 			}
 			int size = parameter.size();
 			for(int i=0;i<size;i++) {
+				/*System.out.println(parameter.get(i).getParameter_name());
+				System.out.println(parameter.get(i).getParameter_value());*/
 				str=str.replace(parameter.get(i).getParameter_name(), parameter.get(i).getParameter_value());
 			}
 			bw.write(str.toCharArray());
@@ -96,7 +98,7 @@ public class FileUtil {
 				String[] split = temp.split(":");
 				Parameter parameter = new Parameter();
 				parameter.setName(split[0]);
-				parameter.setParameter_name(split[1]);
+				parameter.setParameter_name(split[1].trim());
 				list.add(parameter);
 			}
 			br.close();

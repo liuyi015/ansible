@@ -10,6 +10,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 $(function(){
+	var rs="<%=session.getAttribute("msg")%>";
+	if(rs!="null"){
+		//删除信息，防止刷新页面的时候出现
+		<%session.removeAttribute("msg");%>
+		alert(rs);
+	}
 	getPlaybook();
 });
 
@@ -30,52 +36,51 @@ function getPlaybook(){
 function select(){
     var folder=$("#PBPackage").val();
    	$.ajax({
-   		url:"${pageContext.request.contextPath}/playbook/getPBTemp",
-   		type:"get",
-   		async:false,
-   		data:{'uri':folder},
-   		dataType:"json",
-   		success:function(data){
-   			for(var i in data){
-                   $("#palybook").append("<option value='"+data[i]+"'>"+data[i]+"</option>");
-             }
-   		}
-   	});
-}
-/* function read(){
-    var fileName=$("#playbook").val();
-   	$.ajax({
    		url:"${pageContext.request.contextPath}/playbook/readFile",
    		type:"get",
-   		async:false,
-   		data:{'fileName':fileName},
+   		//async:false,
+   		data:{'uri':folder},
+   		success:function(data){
+            $("#myDiv").html(data);
+      	}
+   	});
+}
+function checkName(){
+	var projectname=$("#project").val();
+	$.ajax({
+   		url:"${pageContext.request.contextPath}/playbook/checkProjectName",
+   		type:"get",
+   		data:{'projectName':projectname},
    		dataType:"json",
    		success:function(data){
-   			for(var i in data){
-                   $("#palybook").append("<option value='"+data[i]+"'>"+data[i]+"</option>");
-             }
-   		}
+   			if(data=="true"){
+   				$("#rs").html("<font color='red'>*名字已存在！！！</font>");
+   				$("#addBton").attr("disabled","true");
+   			}else{
+   				$("#rs").html("");
+   				$("#addBton").removeAttr("disabled");
+   			}
+      	}
    	});
-} */
+}
 function doAdd(){
-	 var palybook=$("#palybook").val();
+	 var palybook=$("#PBPackage").val();
 	if(palybook==null ||palybook==''){
-		alert("请选择playbook模板");
+		alert("请选择playbook功能");
 		return;
 	} 
+	var projectname=$("#project").val();
+	if(projectname==null || projectname==''){
+		alert("项目名字不能为空！");
+		return;
+	}
 	var mytable=document.getElementById("mytable");
 	var len=mytable.rows.length;//获得行数
 	for(var i=0;i<len;i++){
-		var nameId="name"+i;
-		var valueId="value"+i;
-		var name=$("#"+nameId).val();
-		if(name==null ||name==""){
-			alert("变量名不能为空");
-			return;
-		}
+		var valueId="parameter_value"+i;
 		var value=$("#"+valueId).val();
 		if(value==null ||value==""){
-			alert("变量值不能为空");
+			alert("参数赋值不能为空");
 			return;
 		}
 	}
@@ -91,17 +96,11 @@ function doAdd(){
 <h4>新增playbook</h4>
 <!-- <input type="button"  onclick="add()" value="add"/> -->
 <form id="addForm" name="addForm" action="${pageContext.request.contextPath}/playbook/doAdd" method="post">
-	*playboo功能:<select id="PBPackage" name="folder" onchange="select()"><option value="">选择playbook功能</option></select><br><br>
-	*playbook模块名:<select id="palybook" name="playbook"><option value="">选择playbook模板</option></select><br><br>
-	<table id="mytable">
-	<tr>
-	<td>*变量名:</td><td><input type="text" id="name0" name="parameter[0].parameter_name"/></td>
-	<td>*变量值:</td><td><input type="text" id="value0" name="parameter[0].parameter_value"/></td>
-	</tr>
-	</table>
+	*playbook功能:<select id="PBPackage" name="folder" onchange="select()"><option value="">选择playbook功能</option></select><br><br>
+	*项目文件夹名字:<input id="project" name="peoject_name" onblur="checkName()"/> <div id="rs"></div><br><br>
+	<div id="myDiv"></div>
 	<hr><br>
-	<input type="button" value="添加一行" onclick="addRow()"/>&nbsp;&nbsp;
-	<input type="button" value="提交"  onclick="doAdd()"/>
+	<input id="addBton" type="button" value="提交"  onclick="doAdd()"/> 
 </form>
 
 

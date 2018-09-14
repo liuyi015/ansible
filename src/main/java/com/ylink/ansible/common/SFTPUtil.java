@@ -1,26 +1,18 @@
 package com.ylink.ansible.common;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
- 
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
 
-import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
@@ -30,8 +22,8 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
  
 /**
- * SFTP帮助类
- * @author wangbailin
+ * SFTP帮助类(使用jsch)
+ * @author liuyi
  *
  */
 public class SFTPUtil {
@@ -161,11 +153,42 @@ public class SFTPUtil {
              }
 			 list.add(filename);
 		}
+		System.out.println(list.toString());
 		return list;
 	}
 	
+	public static SSHResInfo exeCommand(String command,ChannelExec channelExec) {
+		SSHResInfo rs = new SSHResInfo();
+		
+		try {
+			System.out.println("执行语句："+command);
+			channelExec.setCommand(command);
+			channelExec.connect();
+			
+			InputStream stdStream = channelExec.getInputStream();
+            InputStream errStream = channelExec.getErrStream();  
+            
+            String success = IOUtils.toString(stdStream,"UTF-8");
+            String error = IOUtils.toString(errStream,"UTF-8");
+            rs.setSuccessInfo(success);
+            rs.setErrorInfo(error);
+            
+            if(channelExec.isClosed()) {
+            	int code = channelExec.getExitStatus();
+            	rs.setCode(code);
+            }
+            System.out.println(rs.toString());
+            Thread.sleep(2000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(channelExec != null)channelExec.disconnect();
+		}
+		return rs;
+	}
+	
 	/*public static SSHResInfo exeCommand(String host, Integer port, String user, String password,Integer timeout,String command) {
-		SSHResInfo result = null;
+		SSHResInfo rs = new SSHResInfo();
 		ChannelExec channelExec = null;
 		Session session = null;
 		try {
@@ -177,37 +200,23 @@ public class SFTPUtil {
 			InputStream stdStream = channelExec.getInputStream();
             InputStream errStream = channelExec.getErrStream();  
             
-            byte[] tmp = new byte[1024]; //读数据缓存
-            StringBuffer strBuffer = new StringBuffer();  //执行SSH返回的结果
-            StringBuffer errResult=new StringBuffer();
+            String success = IOUtils.toString(stdStream,"UTF-8");
+            String error = IOUtils.toString(errStream,"UTF-8");
+            rs.setSuccessInfo(success);
+            rs.setErrorInfo(error);
             
-            while(true){
-            	//获得错误输出
-                while(errStream.available() > 0){
-                    int i = errStream.read(tmp, 0, 1024);
-                    if(i < 0) break;
-                    errResult.append(new String(tmp, 0, i));
-                }
-
-               //获得标准输出
-                while(stdStream.available() > 0){
-                    int i = stdStream.read(tmp, 0, 1024);
-                    if(i < 0) break;
-                    strBuffer.append(new String(tmp, 0, i));
-                }
-                if(channelExec.isClosed()){
-                    int code = channelExec.getExitStatus();
-                    result = new SSHResInfo(code, strBuffer.toString(), errResult.toString());
-                    break;
-                }
-                Thread.sleep(50000);
+            if(channelExec.isClosed()) {
+            	int code = channelExec.getExitStatus();
+            	rs.setCode(code);
             }
+            System.out.println(rs.toString());
+            Thread.sleep(2000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			if(channelExec != null)channelExec.disconnect();
 			if(session != null)session.disconnect();
 		}
-		return null;
+		return rs;
 	}*/
 }

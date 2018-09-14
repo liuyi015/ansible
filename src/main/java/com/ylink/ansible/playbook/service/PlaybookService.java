@@ -15,21 +15,30 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.Session;
 import com.ylink.ansible.common.FileUtil;
 import com.ylink.ansible.common.SFTPUtil;
+import com.ylink.ansible.common.SSHResInfo;
 import com.ylink.ansible.playbook.pojo.Parameter;
 import com.ylink.ansible.playbook.pojo.Playbook;
 
 @Service
 public class PlaybookService {
-	//模板存放地址
+	/**模板文件夹存放地址 ：/var/lib/awx/playbookTemplates/ */
 	@Value("${PLAYBOOK_PATH}")
 	private String PLAYBOOK_PATH;
-	@Value("${vars_path}")
-	private String vars_path;
-	//项目存放地址
+	
+	/** 变量文件地址：/roles/mkusers/vars/	 */
+	@Value("${varFile_path}")
+	private String varFile_path;
+	
+	/** 变量文件名：main.yml	 */
+	@Value("${varFile_name}")
+	private String varFile_name;
+	
+	/**项目存放地址 :/var/lib/awx/projects/*/
 	@Value("${PROJECTS_PATH}")
 	private String PROJECTS_PATH;
 	
@@ -49,8 +58,112 @@ public class PlaybookService {
 		if(StringUtils.isNotEmpty(uri)) {
 			path=path+uri;
 		}
+		return getDir(path);
+	}
+
+	public Boolean addPlaybook(Playbook playbook, HttpServletRequest request) {
+		
+		
+		String saveFile =request.getServletContext().getRealPath("download")+File.separator+varFile_name;
+		String newFile=request.getServletContext().getRealPath("upload")+File.separator+varFile_name;
+		
+		String tempPath=PLAYBOOK_PATH+playbook.getFolder();    //要复制的playbook的路径
+		String newTempPath=PROJECTS_PATH+playbook.getPeoject_name();    //复制目的地址
+		
+		Session session = null;
+		ChannelSftp sftp = null;
+		ChannelExec channelExec = null;
+		Boolean upload =false;
+		try {
+			//1、编辑playbook变量文件
+			Boolean str = FileUtil.replaceFileStr(saveFile, newFile, playbook.getParameter());
+			if(!str) {
+				return false;
+			}
+			
+			//连接Linux
+			session = SFTPUtil.connect(HOST, PROT, USER, PASSWORD,TIMEOUT);
+			//2、复制playbook文件夹
+			channelExec =(ChannelExec) session.openChannel("exec");
+			// cp -r /var/lib/awx/playbookTemplates/mkUsers /var/lib/awx/projects/testUser 
+			String command="cp -r "+tempPath+" "+newTempPath;
+			SSHResInfo rs = SFTPUtil.exeCommand(command, channelExec);
+			if(rs==null) {
+				return false;
+			}else if(rs.getCode()!=0) {
+				return false;
+			}
+			//关闭通道
+			if(channelExec != null) {
+				channelExec.disconnect();
+			}
+			
+			//3、上传playbook变量文件
+			String directory=newTempPath+varFile_path;
+			sftp = (ChannelSftp) session.openChannel("sftp");
+			sftp.connect();
+			upload=SFTPUtil.upload(directory, newFile, sftp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(sftp != null)sftp.disconnect();
+			if(channelExec != null)channelExec.disconnect();
+			if(session != null)session.disconnect();
+		}
+		return upload;
+	}
+
+	public List<Parameter> readFile(String folder,HttpServletRequest request) {
+		String srcFile =PLAYBOOK_PATH+folder+varFile_path+varFile_name;   //playbook模板的服务器地址
+		
+		String saveFilePath =request.getServletContext().getRealPath("download");
+		String saveFile =saveFilePath+File.separator+varFile_name;
+		Session session = null;
+		ChannelSftp sftp = null;
+		List<Parameter> list=null;
+		try {
+			session = SFTPUtil.connect(HOST, PROT, USER, PASSWORD,TIMEOUT);
+			Channel channel = session.openChannel("sftp");
+			channel.connect();
+			sftp = (ChannelSftp) channel;
+			//1、下载playbook变量文件
+			Boolean rs = SFTPUtil.download(srcFile, saveFilePath, sftp);
+			if(rs) {
+				//2、读playbook变量文件
+				 list=FileUtil.readFile(saveFile);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(sftp != null)sftp.disconnect();
+			if(session != null)session.disconnect();
+		}
+		return list;
+	}
+
+	public Boolean checkProjectName(String projectName) {
+		List list = this.getDir(PROJECTS_PATH);
+		if(list==null) {
+			return true;
+		}
+		int size = list.size();
+		for(int i = 0;i<size;i++) {
+			String name=(String) list.get(i);
+			if(name.equals(projectName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 获取目录
+	 * @param path
+	 * @return
+	 */
+	public List getDir(String path) {
 		List list=null;
-		String command="ls /var/lib/awx/playbookTemplates/";
 		Session session = null;
 		ChannelSftp sftp = null;
 		try {
@@ -67,78 +180,4 @@ public class PlaybookService {
 		}
 		return list;
 	}
-
-	public Boolean addPlaybook(Playbook playbook, HttpServletRequest request) {
-		
-		String filename = playbook.getPlaybook();
-		String srcFile =PLAYBOOK_PATH+playbook.getFolder()+"/"+filename;   //playbook模板的服务器地址
-		
-		String saveFilePath =request.getServletContext().getRealPath("download");
-		String saveFile =saveFilePath+File.separator+filename;
-		
-		String directory=PROJECTS_PATH+playbook.getFolder();    //要上传的playbook的根路径
-		String[] split = filename.split("\\.");
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSS");
-		String newFileName = split[0]+format.format(new Date())+"."+split[1];
-		System.out.println(newFileName);
-		String newFile=request.getServletContext().getRealPath("upload")+File.separator+newFileName;
-		
-		Session session = null;
-		ChannelSftp sftp = null;
-		Boolean upload =false;
-		try {
-			session = SFTPUtil.connect(HOST, PROT, USER, PASSWORD,TIMEOUT);
-			Channel channel = session.openChannel("sftp");
-			channel.connect();
-			sftp = (ChannelSftp) channel;
-			//1、下载playbook模板
-			Boolean rs = SFTPUtil.download(srcFile, saveFilePath, sftp);
-			if(!rs) {
-				return false;
-			}
-			//2、编辑playbook模板
-			Boolean str = FileUtil.replaceFileStr(saveFile, newFile, playbook.getParameter());
-			if(!str) {
-				return false;
-			}
-			//3、上传playbook
-			upload=SFTPUtil.upload(directory, newFile, sftp);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			if(sftp != null)sftp.disconnect();
-			if(session != null)session.disconnect();
-		}
-		return upload;
-	}
-
-	public List<Parameter> readFile(String fileName,HttpServletRequest request) {
-		String srcFile =PLAYBOOK_PATH+fileName;   //playbook模板的服务器地址
-		
-		String saveFilePath =request.getServletContext().getRealPath("download");
-		String saveFile =saveFilePath+File.separator+fileName;
-		Session session = null;
-		ChannelSftp sftp = null;
-		List<Parameter> list=null;
-		try {
-			session = SFTPUtil.connect(HOST, PROT, USER, PASSWORD,TIMEOUT);
-			Channel channel = session.openChannel("sftp");
-			channel.connect();
-			sftp = (ChannelSftp) channel;
-			//1、下载playbook模板
-			Boolean rs = SFTPUtil.download(srcFile, saveFilePath, sftp);
-			if(rs) {
-				//2、读playbook模板
-				 list=FileUtil.readFile(saveFile);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			if(sftp != null)sftp.disconnect();
-			if(session != null)session.disconnect();
-		}
-		return list;
-	}
-
 }

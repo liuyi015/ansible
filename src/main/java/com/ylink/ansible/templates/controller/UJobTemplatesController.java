@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.job.pojo.Job;
 import com.ylink.ansible.job.pojo.RunResult;
 import com.ylink.ansible.project.pojo.Project;
@@ -30,8 +31,15 @@ public class UJobTemplatesController {
 	@RequestMapping(value="list",method=RequestMethod.GET)
 	public String toList(HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
-		List<Template> list = templateService.toList(cookies);
-		request.setAttribute("list", list);
+		String page = request.getParameter("page");
+		if(StringUtils.isEmpty(page)) {
+			page="1";
+		}
+		Map<String, Object> params=new HashMap<>();
+		params.put("page", page);
+		ResultInfo resultInfo = templateService.findTemplate(params, cookies);
+		resultInfo.setCurrentPage(Integer.parseInt(page));
+		request.setAttribute("reInfo", resultInfo);
 		return "template/list";
 	}
 	
@@ -55,9 +63,9 @@ public class UJobTemplatesController {
 			
 		}
 		//排序
-		params.put("order_by", "name");
-		List<Template> list = templateService.findTemplate(params,cookies);
-		request.setAttribute("list", list);
+		//params.put("order_by", "name");
+		ResultInfo resultInfo = templateService.findTemplate(params,cookies);
+		request.setAttribute("reInfo", resultInfo);
 		return "template/list";
 	}
 	
@@ -75,7 +83,7 @@ public class UJobTemplatesController {
 			request.getSession().setAttribute("msg", "add fail！！！！！");
 			return "redirect:/templates/toAddJobTemp";
 		}
-		request.getSession().setAttribute("success", "add success！！！！！");
+		request.getSession().setAttribute("msg", "add success！！！！！");
 		return "redirect:/templates/list";
 	}
 	

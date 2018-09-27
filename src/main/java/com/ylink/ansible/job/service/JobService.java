@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ylink.ansible.common.Common;
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.inventory.pojo.Inventory;
 import com.ylink.ansible.inventory.pojo.InventoryUpdate;
 import com.ylink.ansible.job.pojo.Job;
@@ -31,21 +32,17 @@ public class JobService {
 
 	@Value("${API_URL}")
 	private String API_URL;
+	@Value("${PAGE_SIZE}")
+	private Integer PAGE_SIZE;
 	
-	public List findUnifiedJob(Map<String, Object> params, Cookie[] cookies) throws Exception {
-		String url=API_URL+"/unified_jobs/";
+	public ResultInfo findUnifiedJob(Map<String, Object> params, Cookie[] cookies) throws Exception {
+		String url=API_URL+"/unified_jobs/?page_size="+PAGE_SIZE+"&not__launch_type=sync"+"&order_by=-finished";
 		
 		List<Object> list=new ArrayList<>();
 		if(params!=null) {
 			//拼接url
-			boolean isFirst=true;
 			for(Entry<String, Object> entry:params.entrySet()) {
-				if(isFirst) {
-					url=url+"?"+entry.getKey()+"="+entry.getValue();
-					isFirst=false;
-				}else {
-					url=url+"&"+entry.getKey()+"="+entry.getValue();
-				}
+				url=url+"&"+entry.getKey()+"="+entry.getValue();
 			}
 		}
 		Cookie token = Common.getToken(cookies);
@@ -74,8 +71,17 @@ public class JobService {
 				list.add(projectUpdate);
 			}
 		}
+		//截取总数量
+		int count = JSONObject.fromObject(result).getInt("count");
 		
-		return list;
+		ResultInfo resultInfo=new ResultInfo();
+		resultInfo.setCount(count);
+		int totalPage=(count+PAGE_SIZE-1)/PAGE_SIZE;
+		resultInfo.setTotalPage(totalPage);
+		resultInfo.setList(list);
+		System.out.println(list.toString());
+		
+		return resultInfo;
 	}
 
 	public String deleteJob(String id, String type, Cookie[] cookies) throws Exception {

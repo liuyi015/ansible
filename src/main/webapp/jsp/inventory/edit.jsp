@@ -7,7 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ansibleTest</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
+<link href="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/css/common.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 </head>
 <script type="text/javascript">
 /* 
@@ -54,17 +58,37 @@ $(function(){
 });
 </script>
 <body>
-<!-- 返回主页 -->
-<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
-<a href="${pageContext.request.contextPath}/inventory/list" >返回上一页</a>
-<br><hr>
-<form id="add" name="add" action="${pageContext.request.contextPath}/inventory/doEdit" method="put">
-	<input type="hidden" name="id" value="${inventory.id }"/>
-	*name:<input type="text" name="name" value="${inventory.name}"></input><br><br>
-	description:<input type="text" name="description" value="${inventory.description}"></input><br><br>
-	*organization:<select  id="organization" name="organization"><option value="">请选择</option></select><br><br>
-	<input type="submit" value="提交" />
-</form>
-
+<!-- 面包屑导航 -->
+<div class="BreadCrumb">
+	<ol class="BreadCrumb BreadCrumb-list">
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list" >Inventory</a></li>
+	  <li class="breadcrumb-item active">修改</li>
+	</ol>
+</div>
+<div class="container" style="margin-top:100px"> 
+	<div class="row">
+     	<div class="col-sm-12">
+     		<div class="Panel">
+				<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/inventory/doEdit" method="post">
+					<input type="hidden" name="id" value="${inventory.id }"/>
+					<div class="form-group">
+				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <input type="text" class="form-control" id="name" name="name" checked="checked" required value="${inventory.name}"/>
+				    </div>
+				    <div class="form-group">
+					  <label class="form-control-label" for="description">description</label>
+					  <input type="text" class="form-control" id="description" name="description" value="${inventory.description}">
+					</div>
+					<div class="form-group">
+					  <label class="form-control-label" for="organization"><span class="xingSpan">*</span>organization</label>
+					  <select id="organization" name="organization" class="form-control" required><option value="">请选择</option></select>
+					</div>
+					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

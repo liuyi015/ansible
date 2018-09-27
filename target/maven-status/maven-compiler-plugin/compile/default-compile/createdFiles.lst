@@ -40,6 +40,7 @@ com\ylink\ansible\inventory\pojo\Inventory.class
 com\ylink\ansible\user\pojo\Related.class
 com\ylink\ansible\templates\pojo\Template.class
 com\ylink\ansible\utils\ConnectionManagerUtils.class
+com\ylink\ansible\common\ResultInfo.class
 com\ylink\ansible\controller\HelloController.class
 com\ylink\ansible\job\controller\JobController.class
 com\ylink\ansible\job\pojo\SystemJob.class

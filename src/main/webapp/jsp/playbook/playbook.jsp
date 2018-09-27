@@ -9,16 +9,18 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 </head>
 <body>
-	<table id="mytable">
+<div class="form-group">
+	<table id="mytable" style="border-collapse:separate; border-spacing:10px 10px;" >
 	<c:if test="${requestScope.list !=null}">
 		<c:forEach var="item" items="${requestScope.list }" varStatus="status">
-			<tr>
-				<td>*参数名称:</td><td><input type="text" id="name${status.index}" name="parameter[${status.index}].name" value="${item.name }"/></td>
-				<td>*参数代码:</td><td><input type="text" id="parameter_name${status.index}" name="parameter[${status.index}].parameter_name" value="${item.parameter_name }"/></td>
-				<td>*参数赋值:</td><td><input type="text" id="parameter_value${status.index}" name="parameter[${status.index}].parameter_value" value="${item.parameter_value }"/></td>
-			</tr>
+		       <tr >
+					<td><span class="xingSpan">*</span>参数名称:</td><td><input type="text" id="name${status.index}" class="form-control" name="parameter[${status.index}].name" value="${item.name }" readonly=""/></td>
+					<td><span class="xingSpan">*</span>参数代码:</td><td><input type="text" id="parameter_name${status.index}" class="form-control" name="parameter[${status.index}].parameter_name" value="${item.parameter_name }" readonly=""/></td>
+					<td><span class="xingSpan">*</span>参数赋值:</td><td><input type="text" id="parameter_value${status.index}" class="form-control" name="parameter[${status.index}].parameter_value" value="${item.parameter_value }"/></td>
+				</tr>
 		</c:forEach>
 	</c:if>
 	</table>
+</div>
 </body>
 </html>

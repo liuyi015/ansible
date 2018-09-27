@@ -7,7 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ansibleTest</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
+<link href="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/common.css" rel="stylesheet"/>
+<script src="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	var rs="<%=session.getAttribute("msg")%>";
@@ -23,20 +27,39 @@ function doEdit(){
 </script>
 </head>
 <body>
-<!-- 返回主页 -->
-<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
-<a href="${pageContext.request.contextPath}/inventory/view?id=${group.inventory }">返回上一页</a>
-<br><hr>
-<!-- 新增模块 -->
-<div id="AddGruop">
-	<h5>修改group</h5>
-	<form id="groupform" name="groupform" action="${pageContext.request.contextPath}/group/doEdit" method="post">
-	<input type="hidden" name="inventory" value="${group.inventory }"/>
-	<input type="hidden" name="id" value="${group.id }"/>
-	*name:<input type="text" name="name" id="groupName" value="${group.name }"/><br><br>
-	description:<input type="text" id="groupDescription" name="description" value="${group.description }"/>
-	<input type="submit"  value="修改"  onclick="doEdit()" />
-</form>
+<!-- 面包屑导航 -->
+<div class="container-fluid content">
+	<div class="row">
+	  <div class="col-sm-6 ">
+	  	<div class="BreadCrumb">
+			<ol class="BreadCrumb BreadCrumb-list">
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">Inventory</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/view?id=${group.inventory }">Inventory</a></li>
+			  <li class="breadcrumb-item active">修改group</li>
+			</ol>
+		</div>
+	 </div>
+	</div>
+	<div class="row">
+     	<div class="col-sm-12">
+     		<div class="Panel">
+				<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/group/doEdit" method="post">
+					<input type="hidden" name="inventory" value="${group.inventory }"/>
+					<input type="hidden" name="id" value="${group.id }"/>
+					<div class="form-group">
+				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <input type="text" class="form-control" id="name" name="name" checked="checked" required value="${group.name }" />
+				    </div>
+				    <div class="form-group">
+					  <label class="form-control-label" for="description">description</label>
+					  <input type="text" class="form-control" id="description" name="description" value="${group.description }">
+					</div>
+					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>

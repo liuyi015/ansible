@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.inventory.pojo.Inventory;
 import com.ylink.ansible.job.service.JobService;
 
@@ -27,28 +28,46 @@ import net.sf.json.JSONObject;
 @RequestMapping("/job")
 @Controller
 public class JobController {
-	@Value("${PAGE_SIZE}")
-	private Integer PAGE_SIZE;
 	
 	@Autowired
 	JobService jobService;
 
-	@RequestMapping(value="/list",method=RequestMethod.GET)
+	/*@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String toList(HttpServletRequest request) throws Exception {
 		return findBySearch(null, null, request);
 		
-	}
+	}*/
 	/**
-	 * 翻页
+	 * job列表（查询、翻页）
 	 * @param page
 	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/page",method=RequestMethod.GET)
-	public String toList(String page,HttpServletRequest request) throws Exception {
+	@RequestMapping(value="/list",method=RequestMethod.GET)
+	public String toList(HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		Map<String, Object> params=new HashMap<>();
+		ResultInfo resultInfo=new ResultInfo();
 		
-		return findBySearch(null, page, request);
+		String page = request.getParameter("page");
+		if(StringUtils.isEmpty(page)) {
+			page="1";
+		}
+		params.put("page", page);
+		
+		String search = request.getParameter("search");
+		if(StringUtils.isNotEmpty(search)) {
+			String[] s = search.split(" ");
+			for(int i=0;i<s.length;i++) {
+				params.put("search", s[i]);
+			}
+			request.setAttribute("search", search);
+		}
+		resultInfo=jobService.findUnifiedJob(params,cookies);
+		resultInfo.setCurrentPage(Integer.parseInt(page));
+		request.setAttribute("reInfo", resultInfo);
+		return "job/list";
 	}
 	
 	@RequestMapping("/toDelete")
@@ -66,34 +85,6 @@ public class JobController {
 		}
 		return "redirect:/job/list";
 		
-	}
-	
-	/**
-	 * (do-search)根据条件查询project
-	 * @param project
-	 * @param request
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/search",method=RequestMethod.POST)
-	public String findBySearch(String name,String page,HttpServletRequest request) throws Exception {
-		Cookie[] cookies = request.getCookies();
-		Map<String,Object> params=new HashMap<>();
-		if(StringUtils.isNotEmpty(name)) {
-			params.put("name", name);
-			request.setAttribute("name", name);
-		}
-		if(StringUtils.isNotEmpty(page)) {
-			params.put("page", page);
-		}
-		params.put("page_size", PAGE_SIZE);
-		params.put("order_by", "-finished");
-		params.put("not__launch_type", "sync");
-		
-		
-		List list=jobService.findUnifiedJob(params,cookies);
-		request.setAttribute("list", list);
-		return "job/list";
 	}
 	
 	@RequestMapping("/toView")

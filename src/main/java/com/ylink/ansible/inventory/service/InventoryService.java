@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ylink.ansible.common.Common;
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.group.pojo.Group;
 import com.ylink.ansible.host.pojo.Host;
 import com.ylink.ansible.inventory.pojo.Inventory;
@@ -27,6 +28,8 @@ public class InventoryService {
 	
 	@Value("${API_URL}")
 	private String API_URL;
+	@Value("${PAGE_SIZE}")
+	private int PAGE_SIZE;
 
 	/**
 	 * 查询所有的Inventory
@@ -35,7 +38,20 @@ public class InventoryService {
 	 * @throws Exception
 	 */
 	public List<Inventory> getAllInventory(Cookie[] cookies) throws Exception {
-		return findInventory(null, cookies);
+		String result =this.getResult(null, cookies);
+		if(StringUtils.isEmpty(result)) {
+			return null;
+		}
+		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
+		List<Inventory> list=new ArrayList<>();
+		Iterator<Project> it = results.iterator();
+		while(it.hasNext()) {
+			Inventory inventory = (Inventory) JSONObject.toBean(JSONObject.fromObject(it.next()), Inventory.class);
+			list.add(inventory);
+		}
+		
+		System.out.println(list.toString());
+		return list;
 	}
 
 	/**
@@ -111,22 +127,9 @@ public class InventoryService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Inventory> findInventory(Map<String, Object> params, Cookie[] cookies) throws Exception {
-		String url=API_URL+"/inventories/";
-		if(params!=null) {
-			//拼接url
-			boolean isFirst=true;
-			for(Entry<String, Object> entry:params.entrySet()) {
-				if(isFirst) {
-					url=url+"?"+entry.getKey()+"="+entry.getValue();
-					isFirst=false;
-				}else {
-					url=url+"&"+entry.getKey()+"="+entry.getValue();
-				}
-			}
-		}
-		Cookie token = Common.getToken(cookies);
-		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
+	public ResultInfo toList(Map<String, Object> params, Cookie[] cookies) throws Exception {
+		
+		String result =this.getResult(params, cookies);
 		if(StringUtils.isEmpty(result)) {
 			return null;
 		}
@@ -137,9 +140,37 @@ public class InventoryService {
 			Inventory inventory = (Inventory) JSONObject.toBean(JSONObject.fromObject(it.next()), Inventory.class);
 			list.add(inventory);
 		}
+		//截取总数量
+		int count = JSONObject.fromObject(result).getInt("count");
 		
+		ResultInfo resultInfo=new ResultInfo();
+		resultInfo.setCount(count);
+		int totalPage=(count+PAGE_SIZE-1)/PAGE_SIZE;
+		resultInfo.setTotalPage(totalPage);
+		resultInfo.setList(list);
 		System.out.println(list.toString());
-		return list;
+		
+		return resultInfo;
+	}
+	
+	/**
+	 * 拼接url，获取get返回值
+	 * @param params
+	 * @param cookie
+	 * @return
+	 * @throws Exception
+	 */
+	public String getResult(Map<String, Object> params ,Cookie[] cookies) throws Exception {
+		String url=API_URL+"/inventories/?page_size="+PAGE_SIZE+"&order_by=name";
+		if(params!=null) {
+			//拼接url
+			for(Entry<String, Object> entry:params.entrySet()) {
+				url=url+"&"+entry.getKey()+"="+entry.getValue();
+			}
+		}
+		Cookie token = Common.getToken(cookies);
+		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
+		return result;
 	}
 
 	public List<Group> getRootGroups(Integer id, Cookie[] cookies) throws Exception {

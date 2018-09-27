@@ -6,8 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ansibleTest</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<title>editTemplate</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
+<link href="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/common.css" rel="stylesheet"/>
+<script src="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 function allProject(){
 	var project='${template.project}';
@@ -139,34 +143,72 @@ $(function(){
 </script>
 </head>
 <body>
-<!-- 返回主页 -->
-<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
-<a href="${pageContext.request.contextPath}/templates/list" >返回上一页</a>
-<br><hr>
-<form id="editform" name="edit" action="${pageContext.request.contextPath}/templates/doEdit" method="post">
-	<input type="hidden" name="id" value="${template.id }"/>
-	*name:<input type="text" name="name"  value="${template.name }"/><br><br>
-	description:<input type="text" name="description" value="${template.description}"/><br><br>
-	*job type:<select id="job_type" name="job_type" ><option value="">请选择工作类型</option>
-		<option value="run" id="run">Run</option>
-		<option value="check" id="check">Check</option>
-		<option value="scan" id="scan">Scan</option>
-	</select><br><br>
-	*inventory:<select id="inventory" name="inventory"><option value="">请选择</option></select><br><br>
-	*project:<select name="project" id="project" onchange="selProject()"><option value="">请选择项目</option></select><br><br>
-	*playbook:<input type="text" id="playbook" name="playbook" disabled="disabled" value="${template.playbook}"/><br><br>
-	<input type="hidden" id="playbook1" name="playbook" value="${template.playbook}"/>
-	*machine credential:<select id="credential" name="credential"><option value="">请选择</option></select><br><br>
-	*verbosity:<select id="verbosity" name="verbosity"><option value="">请选择</option>
-		<option value="0" id="0">"0 (Normal)"</option>
-		<option value="1" id="1">"1 (Verbose)"</option>
-		<option value="2" id="2">"2 (More Verbose)"</option>
-		<option value="3" id="3">"3 (Debug)"</option>
-		<option value="4" id="4">"4 (Connection Debug)"</option>
-		<option value="5" id="5">"5 (WinRM Debug)"</option>
-	</select><br><br>
-	<input type="button"  value="提交"  onclick="doEdit()" />
-</form>
-
+<!-- 面包屑导航 -->
+<div class="row">
+  <div class="col-sm-6">
+  	<div class="BreadCrumb">
+		<ol class="BreadCrumb BreadCrumb-list">
+		  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+		  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/templates/list">TEMPLATE</a></li>
+		  <li class="breadcrumb-item active">修改</li>
+		</ol>
+	</div>
+ </div>
+</div>
+<div class="container" style="margin-top:100px"> 
+	<div class="row">
+     	<div class="col-sm-12">
+     		<div class="Panel">
+     			<form id="editform" name="edit" action="${pageContext.request.contextPath}/templates/doEdit" method="post">
+					<input type="hidden" name="id" value="${template.id }"/>
+					<div class="form-group">
+				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <input type="text" class="form-control" id="name" name="name" checked="checked" required value="${template.name }" />
+				    </div>
+				    <div class="form-group">
+					  <label class="form-control-label" for="description">description</label>
+					  <input type="text" class="form-control" id="description" name="description" value="${template.description }">
+					</div>
+					<div class="form-group">
+				      <label for="job_type"><span class="xingSpan">*</span>job type:</label>
+				      <select class="custom-select" name="job_type" id="job_type"> 
+					      	<option value="run">Run</option>
+							<option value="check">Check</option>
+							<option value="scan">Scan</option>
+					  </select>
+				    </div>
+				    <div class="form-group">
+				      	<label for="inventory"><span class="xingSpan">*</span>inventory:</label>
+				        <select id="inventory" name="inventory" class="form-control" required><option value="">请选择</option></select>
+				    </div>
+				    <div class="form-group">
+				      <label for="project"><span class="xingSpan">*</span>project:</label>
+				       <select id="project" name="project" class="form-control" onchange="selProject()" required><option value="">请选择一个项目</option></select>
+				    </div>
+				    <div class="form-group">
+				      <label for="playbook">playbook:</label>
+				      <input type="text" class="form-control" id="playbook" name="playbook" readonly="readonly" value="${template.playbook}" >
+				    </div>
+				    <div class="form-group">
+				      	<label for="credential"><span class="xingSpan">*</span>machine credential:</label>
+				        <select id="credential" name="credential" class="form-control" required><option value="">请选择</option></select>
+				    </div>
+				    <div class="form-group">
+				      <label for="verbosity"><span class="xingSpan">*</span>verbosity:</label>
+				      <select class="custom-select" name="verbosity" id="verbosity"> 
+					  		<option value="0">"0 (Normal)"</option>
+							<option value="1">"1 (Verbose)"</option>
+							<option value="2">"2 (More Verbose)"</option>
+							<option value="3">"3 (Debug)"</option>
+							<option value="4">"4 (Connection Debug)"</option>
+							<option value="5">"5 (WinRM Debug)"</option>
+					  </select>
+				    </div>
+					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

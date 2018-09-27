@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.group.pojo.Group;
 import com.ylink.ansible.host.pojo.Host;
 import com.ylink.ansible.inventory.pojo.Inventory;
@@ -57,8 +58,16 @@ public class InventoryController {
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String toList(HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
-		List<Inventory> list = inventoryService.getAllInventory(cookies);
-		request.setAttribute("list", list);
+		String page = request.getParameter("page");
+		if(StringUtils.isEmpty(page)) {
+			page="1";
+		}
+		
+		Map<String, Object> params=new HashMap<>();
+		params.put("page", page);
+		ResultInfo resultInfo = inventoryService.toList(params, cookies);
+		resultInfo.setCurrentPage(Integer.parseInt(page));
+		request.setAttribute("reInfo", resultInfo);
 		return "inventory/list";
 	}
 	/**
@@ -80,8 +89,8 @@ public class InventoryController {
 		}
 		//排序
 		params.put("order_by", "name");
-		List<Inventory> list = inventoryService.findInventory(params,cookies);
-		request.setAttribute("list", list);
+		ResultInfo resultInfo = inventoryService.toList(params, cookies);
+		request.setAttribute("reInfo", resultInfo);
 		return "inventory/list";
 	}
 	/**

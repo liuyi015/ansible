@@ -1,6 +1,7 @@
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\inventory\pojo\Inventory.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\pojo\Job.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\user\controller\UserController.java
+D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\common\ResultInfo.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\inventory\controller\InventoryController.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\group\pojo\Group.java
 D:\workspace-sts-3.9.0.RELEASE\ansible2\src\main\java\com\ylink\ansible\job\controller\JobController.java

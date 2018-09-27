@@ -7,7 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>ansibleTest</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
+<link href="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/common.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/font-awesome.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 </head>
 <script type="text/javascript">
 $(function(){
@@ -56,63 +61,110 @@ function delHost(id,inventory){
 
 </script>
 <body>
-<!-- 返回主页 -->
-<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
-<a href="${pageContext.request.contextPath}/inventory/list" >返回上一页</a>
-<br><hr>
-
-<div id="groupDiv">
-<h4>groups</h4>
-<input type="button"  onclick="addGroup(${inventory})" value="新增"/>
-<br><br>
-<%-- <form action="${pageContext.request.contextPath}/inventory/search" method="post">
-	name:<input type="text" name="name" value="${inventory.name }">
-	<input type="button" value="查询">
-</form>
-<br><hr><br> --%>
-<table border="1px">
-	<tr>
-		<td>name</td>
-		<td>操作</td>
-	</tr>
-	<c:if test="${requestScope.rootGrops !=null}">
-		<c:forEach var="group" items="${requestScope.rootGrops}">
-			<tr>
-				<td>${group.name}</td>
-				<td><input type="button" onclick="editGroup(${group.id})" value="修改"/>
-				<input type="button"  onclick="delGroup(${group.id},${inventory})" value="删除"/></td>
-			</tr>
-		</c:forEach>
-	</c:if>
-</table>
-</div>
-<br><hr>
-<div id="hostDiv">
-<h4>主机</h4>
-<input type="button"  onclick="addHost(${inventory})" value="新增"/>
-<br><br>
-<%-- <form action="${pageContext.request.contextPath}/inventory/search" method="post">
-	name:<input type="text" name="name" value="${inventory.name }">
-	<input type="button" value="查询">
-</form>
-<br><hr><br> --%>
-<table border="1px">
-	<tr>
-		<td>name</td>
-		<td>enabled</td>
-		<td>操作</td>
-	</tr>
-	<c:if test="${requestScope.hosts !=null}">
-		<c:forEach var="host" items="${requestScope.hosts}">
-			<tr>
-				<td>${host.name}</td>
-				<td>${host.enabled}</td>
-				<td><input type="button" onclick="editHost(${host.id})" value="修改"/>
-				<input type="button"  onclick="delHost(${host.id},${inventory})" value="删除"/></td>
-			</tr>
-		</c:forEach>
-	</c:if>
-</table>
+<!-- 面包屑导航 -->
+<div class="container-fluid content">
+	<div class="row">
+	  <div class="col-sm-6 ">
+	  	<div class="BreadCrumb">
+			<ol class="BreadCrumb BreadCrumb-list">
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">Inventory</a></li>
+			  <li class="breadcrumb-item active">${inventory}</li>
+			</ol>
+		</div>
+	 </div>
+	</div>
+	
+	<div class="row">
+	  <div class="col-sm-6 ">
+	  	<div class="Panel container">
+		  <div class="row">
+			  <div class="col-sm-6">
+				<form class="form-inline my-2 my-lg-0" role="form" action="${pageContext.request.contextPath}/group/search" method="post">
+				 <div class="form-group">
+			    	<input type="text" class="form-control" id="name" value="${group.name}" name="name" placeholder="请输入group名字">
+			    	<span class="input-group-btn">
+			    		<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+			    	</span>
+				  </div>
+				</form>
+			 </div>
+			 <div class="col-sm-6" style="text-align: right; float: right;"><input type="button" class="btn btn-success" onclick="addGroup(${inventory})" value="新增组"/></div>
+			</div>
+			<div class="container-fluid" style="margin-top: 20px">
+				<div class="row">
+					<table class="table table-striped table-hover col-sm-12">
+						 <thead>
+							 <tr class="old">
+								<th scope="col">name</th>
+								<th scope="col">操作</th>
+							</tr>
+						 </thead>
+						 <tbody>
+						 	<c:if test="${requestScope.rootGrops !=null}">
+								<c:forEach var="group" items="${requestScope.rootGrops}">
+									<tr>
+										<td>${group.name}</td>
+										<td>
+										<a style="margin-right: 15px;" onclick="editGroup(${group.id})"><i class="fa fa-pencil"></i></a>
+										<a onclick="delGroup(${group.id},${inventory})"><i class="fa fa-trash-o"></i></a>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		  </div>
+		</div>
+		<div class="col-sm-6">
+			<div class="Panel container">
+			  <div class="row">
+				  <div class="col-sm-6">
+					<form class="form-inline my-2 my-lg-0" role="form" action="${pageContext.request.contextPath}/host/search" method="post">
+					 <div class="form-group">
+				    	<input type="text" class="form-control" id="name" value="${host.name}" name="name" placeholder="请输入主机名字">
+				    	<span class="input-group-btn">
+				    		<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+				    	</span>
+					  </div>
+					</form>
+				 </div>
+				 <div class="col-sm-6" style="text-align: right; float: right;"><input type="button" class="btn btn-success" onclick="addHost(${inventory})" value="新增主机"/></div>
+				</div>
+				<div class="container-fluid" style="margin-top: 20px">
+					<div class="row">
+						<table class="table table-striped table-hover col-sm-12">
+							 <thead>
+								 <tr class="old">
+									<th scope="col">name</th>
+									<th scope="col">enabled</th>
+									<th scope="col">操作</th>
+								</tr>
+							 </thead>
+							 <tbody>
+							 	<c:if test="${requestScope.hosts !=null}">
+									<c:forEach var="host" items="${requestScope.hosts}">
+										<tr>
+											<td>${host.name}</td>
+											<td>${host.enabled}</td>
+											<td>
+												<a style="margin-right: 15px;" onclick="editHost(${host.id})"><i class="fa fa-pencil"></i></a>
+												<a onclick="delHost(${host.id},${inventory})"><i class="fa fa-trash-o"></i></a>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+	</div>
 </div>
 </body>
 </html>

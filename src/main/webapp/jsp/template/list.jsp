@@ -7,7 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>ansibleTest</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
+<link href="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/common.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/static/css/font-awesome.min.css" rel="stylesheet"/>
+<script src="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 </head>
 <script type="text/javascript">
 $(function(){
@@ -44,41 +49,103 @@ function run(id){
 
 </script>
 <body>
-<!-- 返回主页 -->
-<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
-<br><hr>
-<input type="button"  onclick="add()" value="新增 JOB TEMPLATE"/>
-<br><br>
-<form action="${pageContext.request.contextPath}/templates/search" method="post">
-	name:<input type="text" name="name" value="${template.name }">
-	<input type="submit" value="查询">
-</form>
-<br><hr><br>
-<table border="1px">
-	<tr>
-		<td>id</td>
-		<td>name</td>
-		<td>type</td>
-		<td>description</td>
-		<td>修改时间</td>
-		<td>操作</td>
-	</tr>
-	<c:if test="${requestScope.list !=null}">
-		<c:forEach var="template" items="${requestScope.list}">
-			<tr>
-				<td>${template.id}</td>
-				<td>${template.name}</td>
-				<td>${template.type}</td>
-				<td>${template.description}</td>
-				<td>${template.modified}</td>
-				<td><input type="button" onclick="run(${template.id})" value="运行"/>
-				<input type="button" onclick="edit(${template.id})" value="修改"/>
-				<input type="button"  onclick="del(${template.id})" value="删除"/></td>
-			</tr>
-		</c:forEach>
-	</c:if>
-</table>
-
-
+<!-- 面包屑导航 -->
+<div class="container-fluid content">
+	<div class="row">
+	  	<div class="BreadCrumb">
+			<ol class="BreadCrumb BreadCrumb-list">
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+			  <li class="breadcrumb-item active">TEMPLATE</li>
+			  <li style="text-align: right; width: 85%"><a href="${pageContext.request.contextPath}/templates/list"><i class="fa fa-refresh"></i></a></li>
+			</ol>
+		</div>
+	</div>
+	<div class="Panel">
+		<div class="row">
+		  <div class="col-sm-6">
+			<form class="form-inline my-2 my-lg-0" role="form" action="${pageContext.request.contextPath}/templates/search" method="post">
+			 <div class="form-group">
+			   <!-- <label for="name">name:</label> -->
+			    	<input type="text" class="form-control" id="name" value="${template.name}" name="name" placeholder="请输入模板名字">
+			    	<span class="input-group-btn">
+			    		<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+			    	</span>
+			  </div>
+			</form>
+		 </div>
+		 <div class="col-sm-6" style="text-align: right; float: right;"><input type="button" class="btn btn-success" onclick="add()" value="新增"/></div>
+		</div>
+		<div class="container-fluid" style="margin-top: 20px">
+			<div class="row">
+				<table class="table table-striped table-hover col-sm-12">
+					 <thead>
+						 <tr class="old">
+							<th scope="col">name</th>
+							<th scope="col">type</th>
+							<th scope="col">description</th>
+							<th scope="col">修改时间</th>
+							<th scope="col">操作</th>
+						</tr>
+					 </thead>
+					 <tbody>
+						<c:if test="${reInfo.list !=null}">
+							<c:forEach var="template" items="${requestScope.reInfo.list}">
+								<tr>
+									<td>${template.name}</td>
+									<td>${template.type}</td>
+									<td>${template.description}</td>
+									<td>${template.modified}</td>
+									<td>
+									<a style="margin-right: 15px;" onclick="run(${template.id})"><i class="fa fa-rocket"></i></a>
+									<a style="margin-right: 15px;" onclick="edit(${template.id})"><i class="fa fa-pencil"></i></a>
+									<a onclick="del(${template.id})"><i class="fa fa-trash-o"></i></a>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!--分页  -->
+		<div class="row" style="text-align: right;float: right; margin-top: 20px;">
+			<ul class="pagination">
+			  	<c:choose>
+					<c:when test="${reInfo.currentPage == 1}">
+			   			 <li class="page-item disabled">
+				    </c:when>
+				    <c:otherwise>
+				    	<li class="page-item">
+				    </c:otherwise>
+				 </c:choose>
+			      <a class="page-link" href="${pageContext.request.contextPath}/templates/list?page=${reInfo.currentPage-1}">&laquo;</a>
+			    </li>
+			    <c:if test="${reInfo.totalPage !=0}">
+					<c:forEach var="s" begin="1" end="${reInfo.totalPage }">
+						<c:choose>
+							<c:when test="${reInfo.currentPage == s}">
+							 	<li class="page-item active">
+							 </c:when>
+							 <c:otherwise>
+							  	<li class="page-item">
+							 </c:otherwise>
+						 </c:choose>
+					      <a class="page-link" href="${pageContext.request.contextPath}/templates/list?page=${s}">${s}</a>
+					    </li>
+					</c:forEach>
+				</c:if>
+			    <c:choose>
+					<c:when test="${reInfo.currentPage == reInfo.totalPage}">
+			   			 <li class="page-item disabled">
+				    </c:when>
+				    <c:otherwise>
+				    	<li class="page-item">
+				    </c:otherwise>
+				 </c:choose>
+			      <a class="page-link" href="${pageContext.request.contextPath}/templates/list?page=${reInfo.currentPage+1}">&raquo;</a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+</div>
 </body>
 </html>

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.project.pojo.Project;
 import com.ylink.ansible.project.service.ProjectService;
 import com.ylink.ansible.user.pojo.User;
@@ -32,11 +33,25 @@ public class ProjectController {
 	@Autowired
 	public ProjectService projectService;
 	
+	/**
+	 * project列表查询
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String toList(HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
-		List<Project> list = projectService.toList(cookies);
-		request.setAttribute("list", list);
+		String page = request.getParameter("page");
+		if(StringUtils.isEmpty(page)) {
+			page="1";
+		}
+		Map<String, Object> params=new HashMap<>();
+		params.put("page", page);
+		ResultInfo reInfo = projectService.toList(params, cookies);
+		reInfo.setCurrentPage(Integer.parseInt(page));
+		
+		request.setAttribute("reInfo", reInfo);
 		return "project/list";
 	}
 	
@@ -50,7 +65,8 @@ public class ProjectController {
 	@ResponseBody
 	public String allProject(HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
-		List<Project> list = projectService.toList(cookies);
+//		List<Project> list = projectService.toList(cookies);
+		List<Project> list = projectService.getAllProject(cookies);
 		JSONArray arr = JSONArray.fromObject(list);
 		return arr.toString();
 	}
@@ -122,7 +138,8 @@ public class ProjectController {
 		}
 		//排序
 		params.put("order_by", "name");
-		List<Project> list = projectService.findProject(params,cookies);
+		//List<Project> list = projectService.findProject(params,cookies);
+		ResultInfo list = projectService.toList(params,cookies);
 		request.setAttribute("list", list);
 		return "project/list";
 	}

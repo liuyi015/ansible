@@ -35,9 +35,9 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping("/main")
-	public String index() {
-		return "main";
+	@RequestMapping("/home")
+	public String home() {
+		return "home";
 	}
 	
 	@RequestMapping(value="/doLogin",method=RequestMethod.POST)

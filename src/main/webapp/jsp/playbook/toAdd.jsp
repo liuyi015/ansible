@@ -7,7 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ansibleTest</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
+<link href="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/css/common.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	var rs="<%=session.getAttribute("msg")%>";
@@ -90,19 +94,37 @@ function doAdd(){
 </script>
 </head>
 <body>
-<!-- 返回主页 -->
-<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
-<br><hr>
-<h4>新增playbook</h4>
-<!-- <input type="button"  onclick="add()" value="add"/> -->
-<form id="addForm" name="addForm" action="${pageContext.request.contextPath}/playbook/doAdd" method="post">
-	*playbook功能:<select id="PBPackage" name="folder" onchange="select()"><option value="">选择playbook功能</option></select><br><br>
-	*项目文件夹名字:<input id="project" name="peoject_name" onblur="checkName()"/> <div id="rs"></div><br><br>
-	<div id="myDiv"></div>
-	<hr><br>
-	<input id="addBton" type="button" value="提交"  onclick="doAdd()"/> 
-</form>
-
-
+<!-- 面包屑导航 -->
+<div class="BreadCrumb">
+<ol class="BreadCrumb-list">
+  <li class="">playbook</li>
+</ol>
+</div>
+<!-- <div class="jumbotron">
+<div class="container"> -->
+       <div class="container" style="margin-top:100px"> 
+       <!-- <div class="content"> -->
+         <div class="row">
+        	<div class="col-sm-12">
+        	<div class="Panel">
+            <div class="nest" id="FootableClose">
+				<form role="form" id="addForm" name="addForm" action="${pageContext.request.contextPath}/playbook/doAdd" method="post">
+					<div class="form-group">
+				      <label for="playbookSelect"><span class="xingSpan">*</span>playbook功能:</label>
+				      <select id="PBPackage" name="folder" class="form-control" onchange="select()"><option value="">选择playbook功能</option></select>
+				    </div>
+				    <div class="form-group">
+					  <label class="form-control-label" for="inputSuccess1"><span class="xingSpan">*</span>项目文件夹名字</label>
+					  <input type="text" class="form-control" id="project" name="peoject_name" onblur="checkName()">
+					  <div id="rs" ></div>
+					</div>
+					<div id="myDiv"></div>
+					<button id="addBton" type="button" class="btn btn-primary" onclick="doAdd()">提交</button>
+				</form>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
 </body>
 </html>

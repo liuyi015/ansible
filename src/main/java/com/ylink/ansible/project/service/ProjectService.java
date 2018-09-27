@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ylink.ansible.common.Common;
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.project.pojo.Project;
 import com.ylink.ansible.user.pojo.User;
 import com.ylink.ansible.utils.HttpRequestUtils;
@@ -25,9 +26,31 @@ public class ProjectService {
 	
 	@Value("${API_URL}")
 	private String API_URL;
+	@Value("${PAGE_SIZE}")
+	private int PAGE_SIZE;
 	
-	public List<Project> toList(Cookie[] cookie) throws Exception {
-		return findProject(null, cookie);
+	public ResultInfo toList(Map<String, Object> params,Cookie[] cookie) throws Exception {
+		//拼接url，获取get返回值
+		String result = getResult(params, cookie);
+		//截取结果集
+		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
+		List<Project> list=new ArrayList<>();
+		Iterator<Project> it = results.iterator();
+		while(it.hasNext()) {
+			Project project = (Project) JSONObject.toBean(JSONObject.fromObject(it.next()), Project.class);
+			list.add(project);
+		}
+		//截取总数量
+		int count = JSONObject.fromObject(result).getInt("count");
+		
+		ResultInfo resultInfo=new ResultInfo();
+		resultInfo.setCount(count);
+		int totalPage=(count+PAGE_SIZE-1)/PAGE_SIZE;
+		resultInfo.setTotalPage(totalPage);
+		resultInfo.setList(list);
+		
+		System.out.println(list.toString());
+		return resultInfo;
 	}
 	/**
 	 * 根据条件查询project
@@ -36,25 +59,11 @@ public class ProjectService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Project> findProject(Map<String, Object> params ,Cookie[] cookie) throws Exception {
-		String url=API_URL+"/projects/";
-		if(params!=null) {
-			//拼接url
-			boolean isFirst=true;
-			for(Entry<String, Object> entry:params.entrySet()) {
-				if(isFirst) {
-					url=url+"?"+entry.getKey()+"="+entry.getValue();
-					isFirst=false;
-				}else {
-					url=url+"&"+entry.getKey()+"="+entry.getValue();
-				}
-			}
-		}
-		Cookie token = Common.getToken(cookie);
-		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
-		if(StringUtils.isEmpty(result)) {
-			return null;
-		}
+	@SuppressWarnings("unchecked")
+	public List<Project> getAllProject(Cookie[] cookie) throws Exception {
+		//拼接url，获取get返回值
+		String result = getResult(null, cookie);
+		//截取结果集
 		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
 		List<Project> list=new ArrayList<>();
 		Iterator<Project> it = results.iterator();
@@ -62,11 +71,29 @@ public class ProjectService {
 			Project project = (Project) JSONObject.toBean(JSONObject.fromObject(it.next()), Project.class);
 			list.add(project);
 		}
-		
-		System.out.println(list.toString());
 		return list;
 	}
 
+	/**
+	 * 拼接url，获取get返回值
+	 * @param params
+	 * @param cookie
+	 * @return
+	 * @throws Exception
+	 */
+	public String getResult(Map<String, Object> params ,Cookie[] cookie) throws Exception {
+		String url=API_URL+"/projects/?page_size="+PAGE_SIZE+"&order_by=name";
+		if(params!=null) {
+			//拼接url
+			for(Entry<String, Object> entry:params.entrySet()) {
+				url=url+"&"+entry.getKey()+"="+entry.getValue();
+			}
+		}
+		Cookie token = Common.getToken(cookie);
+		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
+		return result;
+	}
+	
 	public String addProject(Project project, Cookie[] cookies) throws Exception {
 		Cookie token = Common.getToken(cookies);
 		String apiUrl=API_URL+"/projects/";            //post后面的"/"不能省略，会引起重定向

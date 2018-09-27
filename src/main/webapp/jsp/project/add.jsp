@@ -7,7 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ansibleTest</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
+<link href="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/css/common.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	var rs="<%=session.getAttribute("msg")%>";
@@ -17,6 +21,7 @@ $(function(){
 	}
 	//获取config信息
 	getConfig();
+	getOrganization();
 });
 
 /* 
@@ -39,12 +44,29 @@ function getConfig(){
 		}
 	});
 }
+/* 
+获取organization信息
+*/
+function getOrganization(){
+	$.ajax({
+		type:"GET",
+		async:false, //设为同步请求（异步加载的话后面的遍历方法获取不到option）
+		url:"${pageContext.request.contextPath}/organization/getOrganization",
+		success:function(data){
+			var json=JSON.parse(data);
+			//动态添加select的option
+			$.each(json,function(i,item){
+				$("#organization").append("<option value='"+item.id+"'>"+item.name+"</option>");
+			})
+		}
+	});
+}
+
 /*
  * 控制div的显示与隐藏
  */
 function select(){
 	var scm_type=$("#scm_type").val();
-	var url="${pageContext.request.contextPath}/config/getConfig"
 	if(scm_type==''){
 		$("#path").show();
 		$("#url").hide();
@@ -63,30 +85,58 @@ function doAdd(){
 </script>
 </head>
 <body>
-<!-- 返回主页 -->
-<a href="${pageContext.request.contextPath}/main" >返回主菜单</a>
-<a href="${pageContext.request.contextPath}/project/list" >返回上一页</a>
-<br><hr>
-<form id="addform" name="add" action="${pageContext.request.contextPath}/project/doAdd" method="post">
-	*name:<input type="text" name="name"/><br><br>
-	description:<input type="text" name="description"/><br><br>
-	*organization:<input type="text" name="organization" value="1"/><br><br>
-	*scm_type:<select name="scm_type" id="scm_type" onchange="select()">
-				<option value="请选择上传方式">请选择上传方式</option>
-				<option value="">Manual</option>
-				<option value="git">Git</option>
-			</select><br><br>
-	<div id="path" hidden="">
-		PROJECT BASE PATH:<input type="text" id ="base_dir" disabled="disabled"/><br><br>
-		PLAYBOOK DIRECTORY:<select id="playbook" name="local_path"><option value="">请选择一个项目</option></select>
+<!-- 面包屑导航 -->
+<div class="BreadCrumb">
+	<ol class="BreadCrumb BreadCrumb-list">
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/project/list?page=1" >Project</a></li>
+	  <li class="breadcrumb-item active">新增</li>
+	</ol>
+</div>
+<div class="container" style="margin-top:100px"> 
+	<div class="row">
+     	<div class="col-sm-12">
+     		<div class="Panel">
+				<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/project/doAdd" method="post">
+					<div class="form-group">
+				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <input type="text" class="form-control" id="name" name="name" checked="checked" required />
+				    </div>
+				    <div class="form-group">
+					  <label class="form-control-label" for="description">description</label>
+					  <input type="text" class="form-control" id="description" name="description">
+					</div>
+					<div class="form-group">
+					  <label class="form-control-label" for="organization"><span class="xingSpan">*</span>organization</label>
+					   <select id="organization" name="organization" class="form-control" required><option value="">请选择</option></select>
+					</div>
+					<!-- <div class="form-group">
+				      <label for="scm_type"><span class="xingSpan">*</span>scm_type:</label>
+				      <select class="custom-select" name="scm_type" id="scm_type" onchange="select()"> 
+					      <option value="请选择上传方式">请选择上传方式</option>
+					      <option value="">Manual</option>
+					      <option value="git">Git</option>
+					  </select>
+				    </div> -->
+				    <input type="hidden" class="form-control" id="scm_type" name="scm_type" value="">
+				    <div class="form-group" id="url" hidden="">
+				      <label for="scm_url"><span class="xingSpan">*</span>scm_url:</label>
+				      <input type="text" class="form-control" id="scm_url" name="scm_url">
+				    </div>
+					<div class="form-group" id="path">
+				      <label for="base_dir">PROJECT BASE PATH:</label>
+				      <input type="text" class="form-control" id="base_dir" disabled="disabled">
+				    </div>
+				    <div class="form-group">
+				      <label for="scm_url"><span class="xingSpan">*</span>PLAYBOOK DIRECTORY:</label>
+				       <select id="playbook" name="local_path" class="form-control" required><option value="">请选择一个项目</option></select>
+				    </div>
+					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+				</form>
+			</div>
+		</div>
 	</div>
-	<div id="url" hidden="">
-		scm_url:<input type="text" name="scm_url"/><br><br>
-	</div>
-	
-	<input type="button"  value="增加"  onclick="doAdd()" />
-</form>
-
+</div>
 
 </body>
 </html>

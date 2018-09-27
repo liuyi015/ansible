@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ylink.ansible.common.Common;
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.job.pojo.Job;
 import com.ylink.ansible.job.pojo.RunResult;
 import com.ylink.ansible.project.pojo.Project;
@@ -28,8 +29,10 @@ public class UJobTemplateService {
 
 	@Value("${API_URL}")
 	private String API_URL;
+	@Value("${PAGE_SIZE}")
+	private int PAGE_SIZE;
 	
-	public List<Template> toList(Cookie[] cookies) throws Exception {
+	public ResultInfo toList(Cookie[] cookies) throws Exception {
 		String url=API_URL+"/unified_job_templates/?page_size=20&order_by=name&type=workflow_job_template,job_template";
 		
 		/*Map<String, Object> params=new HashMap<>();
@@ -93,8 +96,8 @@ public class UJobTemplateService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Template> findTemplate(Map<String, Object> params, Cookie[] cookies) throws Exception {
-		String url=API_URL+"/unified_job_templates/?order_by=name&type=workflow_job_template,job_template";
+	public ResultInfo findTemplate(Map<String, Object> params, Cookie[] cookies) throws Exception {
+		String url=API_URL+"/unified_job_templates/?page_size="+PAGE_SIZE+"&order_by=name&type=workflow_job_template,job_template";
 		Cookie token = Common.getToken(cookies);
 		if(params!=null) {
 			//拼接url
@@ -107,15 +110,23 @@ public class UJobTemplateService {
 			return null;
 		}
 		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
+		//截取总数量
+		int count = JSONObject.fromObject(result).getInt("count");
+		
+		ResultInfo resultInfo=new ResultInfo();
+		resultInfo.setCount(count);
+		int totalPage=(count+PAGE_SIZE-1)/PAGE_SIZE;
+		resultInfo.setTotalPage(totalPage);
+		
 		List<Template> list=new ArrayList<>();
 		Iterator<Template> it = results.iterator();
 		while(it.hasNext()) {
 			Template template = (Template) JSONObject.toBean(JSONObject.fromObject(it.next()), Template.class);
 			list.add(template);
 		}
-		
+		resultInfo.setList(list);
 		System.out.println(list.toString());
-		return list;
+		return resultInfo;
 	}
 
 	public RunResult runTemplate(String id, Cookie[] cookies) throws Exception {

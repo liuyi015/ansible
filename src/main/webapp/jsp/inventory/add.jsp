@@ -62,7 +62,7 @@ function doAdd(){
 				<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/inventory/doAdd" method="post">
 					<div class="form-group">
 				      <label for="name"><span class="xingSpan">*</span>name:</label>
-				      <input type="text" class="form-control" id="name" name="name" checked="checked" required />
+				      <input type="text" class="form-control" id="name" name="name" required />
 				    </div>
 				    <div class="form-group">
 					  <label class="form-control-label" for="description">description</label>

@@ -28,16 +28,34 @@ import com.ylink.ansible.templates.service.UJobTemplateService;
 public class UJobTemplatesController {
 	@Autowired
 	UJobTemplateService templateService;
+	
+	/**
+	 * 列表（查询、翻页）
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="list",method=RequestMethod.GET)
 	public String toList(HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
+		Map<String, Object> params=new HashMap<>();
+		ResultInfo resultInfo=new ResultInfo();
+		
 		String page = request.getParameter("page");
 		if(StringUtils.isEmpty(page)) {
 			page="1";
 		}
-		Map<String, Object> params=new HashMap<>();
 		params.put("page", page);
-		ResultInfo resultInfo = templateService.findTemplate(params, cookies);
+		
+		String search = request.getParameter("search");
+		if(StringUtils.isNotEmpty(search)) {
+			String[] s = search.split(" ");
+			for(int i=0;i<s.length;i++) {
+				params.put("search", s[i]);
+			}
+			request.setAttribute("search", search);
+		}
+		resultInfo = templateService.findTemplate(params, cookies);
 		resultInfo.setCurrentPage(Integer.parseInt(page));
 		request.setAttribute("reInfo", resultInfo);
 		return "template/list";

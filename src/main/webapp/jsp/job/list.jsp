@@ -37,7 +37,7 @@ function del(id,type){
 	location.href=url;
 }
 
-/*翻页  */
+/*翻页、查询  */
 function toPage(page){
 	var search=$("#search").val();
 	var url="${pageContext.request.contextPath}/job/list?page="+page+"&search="+search;
@@ -90,8 +90,8 @@ function toPage(page){
 									<td>${job.name}</td>
 									<td>${job.finished}</td>
 									<td>
-									<a style="margin-right: 20px;" onclick="view(${job.id},${job.type})"><i class="fa fa-search-plus"></i></a>
-									<a onclick="del(${job.id},${job.type})"><i class="fa fa-trash-o"></i></a>
+									<a style="margin-right: 20px;" onclick="view(${job.id},'${job.type}')"><i class="fa fa-search-plus"></i></a>
+									<a onclick="del(${job.id},'${job.type}')"><i class="fa fa-trash-o"></i></a>
 								</tr>
 							</c:forEach>
 						</c:if>

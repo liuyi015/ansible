@@ -1,0 +1,45 @@
+/*面包屑导航  */
+.BreadCrumb {
+    padding: 0;
+    display: flex;
+    background-color: #FFFFFF;
+    width: 100%;
+    z-index: 1039;
+    position: fixed; 
+    right: 0;
+    left: 0;
+    top: 56px;
+    height: 40px;
+    border-bottom: 1px solid #E8E8E8;
+}
+/*面包屑导航  */
+.BreadCrumb-list {
+    padding: 0 40px;
+    list-style: none;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    line-height: 40px;
+}
+
+/* 大内容 */
+.content{
+	margin-top: 100px;
+	/* margin-left: 10px;  */
+	/* margin-right: 30px; */
+}
+
+/*面板  */
+.Panel {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    padding: 20px;
+    border: 1px solid #E8E8E8;
+    margin-top: 20px;
+}
+
+/* 红色的* */
+.xingSpan{
+	color: red;
+}
+
+

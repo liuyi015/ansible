@@ -136,6 +136,13 @@ public class SFTPUtil {
 		return false;
 	}
 	
+	/**
+	 * 下载目录
+	 * @param directory 目标地址（下载该目录下所有的文件/夹名）
+	 * @param sftp  ChannelSftp
+	 * @return List<String>
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unchecked")
 	public static List<String> downloadDir(String directory, ChannelSftp sftp) throws Exception{
 		System.out.println("sftp downloadDir directory [directory] : "+directory);

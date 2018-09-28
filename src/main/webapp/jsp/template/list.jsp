@@ -47,6 +47,12 @@ function run(id){
 	location.href=url;
 }
 
+/*翻页、查询  */
+function toPage(page){
+	var search=$("#search").val();
+	var url="${pageContext.request.contextPath}/templates/list?page="+page+"&search="+search;
+	location.href=url;
+}
 </script>
 <body>
 <!-- 面包屑导航 -->
@@ -63,10 +69,10 @@ function run(id){
 	<div class="Panel">
 		<div class="row">
 		  <div class="col-sm-6">
-			<form class="form-inline my-2 my-lg-0" role="form" action="${pageContext.request.contextPath}/templates/search" method="post">
+			<form class="form-inline my-2 my-lg-0" role="form">
 			 <div class="form-group">
 			   <!-- <label for="name">name:</label> -->
-			    	<input type="text" class="form-control" id="name" value="${template.name}" name="name" placeholder="请输入模板名字">
+			    	<input type="text" class="form-control" id="search" value="${search}" name="search" placeholder="请输入模板名字">
 			    	<span class="input-group-btn">
 			    		<button class="btn btn-primary"><i class="fa fa-search"></i></button>
 			    	</span>
@@ -108,18 +114,21 @@ function run(id){
 		</div>
 		<!--分页  -->
 		<div class="row" style="text-align: right;float: right; margin-top: 20px;">
-			<ul class="pagination">
-			  	<c:choose>
-					<c:when test="${reInfo.currentPage == 1}">
-			   			 <li class="page-item disabled">
-				    </c:when>
-				    <c:otherwise>
-				    	<li class="page-item">
-				    </c:otherwise>
-				 </c:choose>
-			      <a class="page-link" href="${pageContext.request.contextPath}/templates/list?page=${reInfo.currentPage-1}">&laquo;</a>
-			    </li>
-			    <c:if test="${reInfo.totalPage !=0}">
+			<c:if test="${reInfo.totalPage !=0}">
+				<span style="margin-top: 10px; margin-right: 10px">共&nbsp;${reInfo.count}&nbsp;行</span>
+				<ul class="pagination">
+				  	<c:choose>
+						<c:when test="${reInfo.currentPage == 1}">
+				   			 <li class="page-item disabled">
+					    </c:when>
+					    <c:otherwise>
+					    	<li class="page-item">
+					    </c:otherwise>
+					 </c:choose>
+				      <%-- <a class="page-link" href="${pageContext.request.contextPath}/job/list?page=${reInfo.currentPage-1}>&laquo;</a> --%>
+				      <a class="page-link" onclick="toPage(${reInfo.currentPage-1})"> &laquo;</a>
+				    </li>
+				   
 					<c:forEach var="s" begin="1" end="${reInfo.totalPage }">
 						<c:choose>
 							<c:when test="${reInfo.currentPage == s}">
@@ -129,21 +138,24 @@ function run(id){
 							  	<li class="page-item">
 							 </c:otherwise>
 						 </c:choose>
-					      <a class="page-link" href="${pageContext.request.contextPath}/templates/list?page=${s}">${s}</a>
+					      <%-- <a class="page-link" href="${pageContext.request.contextPath}/job/list?page=${s}">${s}</a> --%>
+					      <a class="page-link" onclick="toPage(${s})">${s}</a>
 					    </li>
 					</c:forEach>
-				</c:if>
-			    <c:choose>
-					<c:when test="${reInfo.currentPage == reInfo.totalPage}">
-			   			 <li class="page-item disabled">
-				    </c:when>
-				    <c:otherwise>
-				    	<li class="page-item">
-				    </c:otherwise>
-				 </c:choose>
-			      <a class="page-link" href="${pageContext.request.contextPath}/templates/list?page=${reInfo.currentPage+1}">&raquo;</a>
-			    </li>
-			</ul>
+					
+				    <c:choose>
+						<c:when test="${reInfo.currentPage == reInfo.totalPage}">
+				   			 <li class="page-item disabled">
+					    </c:when>
+					    <c:otherwise>
+					    	<li class="page-item">
+					    </c:otherwise>
+					 </c:choose>
+				     <%--  <a class="page-link" href="${pageContext.request.contextPath}/job/list?page=${reInfo.currentPage+1}">&raquo;</a> --%>
+				      <a class="page-link" onclick="toPage(${reInfo.currentPage+1})">&raquo;</a>
+				    </li>
+				</ul>
+			</c:if>
 		</div>
 	</div>
 </div>

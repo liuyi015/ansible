@@ -131,7 +131,7 @@ function doAdd(){
 				      <label for="scm_url"><span class="xingSpan">*</span>PLAYBOOK DIRECTORY:</label>
 				       <select id="playbook" name="local_path" class="form-control" required><option value="">请选择一个项目</option></select>
 				    </div>
-					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+					<button id="addBton" type="submit" class="btn btn-navy">提交</button>
 				</form>
 			</div>
 		</div>

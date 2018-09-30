@@ -84,7 +84,7 @@ function delHost(id,inventory){
 				 <div class="form-group">
 			    	<input type="text" class="form-control" id="name" value="${group.name}" name="name" placeholder="请输入group名字">
 			    	<span class="input-group-btn">
-			    		<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+			    		<button class="btn btn-navy"><i class="fa fa-search"></i></button>
 			    	</span>
 				  </div>
 				</form>
@@ -126,7 +126,7 @@ function delHost(id,inventory){
 					 <div class="form-group">
 				    	<input type="text" class="form-control" id="name" value="${host.name}" name="name" placeholder="请输入主机名字">
 				    	<span class="input-group-btn">
-				    		<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+				    		<button class="btn btn-navy"><i class="fa fa-search"></i></button>
 				    	</span>
 					  </div>
 					</form>

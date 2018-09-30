@@ -119,7 +119,7 @@ function doAdd(){
 					  <div id="rs" ></div>
 					</div>
 					<div id="myDiv"></div>
-					<button id="addBton" type="button" class="btn btn-primary" onclick="doAdd()">提交</button>
+					<button id="addBton" type="button" class="btn btn-navy" onclick="doAdd()">提交</button>
 				</form>
 			</div>
 		</div>

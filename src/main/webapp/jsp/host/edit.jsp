@@ -62,7 +62,7 @@ function doEdit(){
 					   <label class="radio-inline col-sm-2"><input type="radio" name="enabled" ${host.enabled=='true' ? 'checked':''} value="true">enabled</label>
 					   <label class="radio-inline col-sm-2"><input type="radio" name="enabled" ${host.enabled=='false' ? 'checked':''} value="false">not enabled</label>
 					</div>
-					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+					<button id="addBton" type="submit" class="btn btn-navy">提交</button>
 				</form>
 			</div>
 		</div>

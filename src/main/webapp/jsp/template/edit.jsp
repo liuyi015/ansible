@@ -204,7 +204,7 @@ $(function(){
 							<option value="5">"5 (WinRM Debug)"</option>
 					  </select>
 				    </div>
-					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+					<button id="addBton" type="submit" class="btn btn-navy">提交</button>
 				</form>
 			</div>
 		</div>

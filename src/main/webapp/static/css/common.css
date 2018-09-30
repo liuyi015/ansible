@@ -42,4 +42,17 @@
 	color: red;
 }
 
+/* 按钮---深藏青色 */
+.btn-navy {
+    color: #fff;
+    background-color: #003366;
+    border-color: #003366;
+}
 
+/* 分页活动按钮颜色 */
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #003366;
+  border-color: #003366;
+}

@@ -35,7 +35,7 @@ body {
 <br><br>
 <a href="${pageContext.request.contextPath}/user/all">allUser</a> --%>
 <!-- 导航菜单 （响应式）-->
- <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+ <div class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #003366 /* 002B80  */">
  	<div class="container-fluid">
 	  <a class="navbar-brand" href="#">Tower</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

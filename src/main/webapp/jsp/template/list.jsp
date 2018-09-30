@@ -74,7 +74,7 @@ function toPage(page){
 			   <!-- <label for="name">name:</label> -->
 			    	<input type="text" class="form-control" id="search" value="${search}" name="search" placeholder="请输入模板名字">
 			    	<span class="input-group-btn">
-			    		<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+			    		<button class="btn btn-navy"><i class="fa fa-search"></i></button>
 			    	</span>
 			  </div>
 			</form>

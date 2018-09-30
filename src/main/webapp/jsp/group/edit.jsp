@@ -55,7 +55,7 @@ function doEdit(){
 					  <label class="form-control-label" for="description">description</label>
 					  <input type="text" class="form-control" id="description" name="description" value="${group.description }">
 					</div>
-					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+					<button id="addBton" type="submit" class="btn btn-navy">提交</button>
 				</form>
 			</div>
 		</div>

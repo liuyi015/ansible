@@ -64,13 +64,13 @@ function toPage(page){
 			 <div class="form-group">
 		    	<input type="text" class="form-control" id="search" value="${search}" name="search" placeholder="请输入job名字">
 		    	<span class="input-group-btn">
-		    		<button class="btn btn-primary" onclick="toPage(1)"><i class="fa fa-search"></i></button>
+		    		<button class="btn btn-navy" onclick="toPage(1)"><i class="fa fa-search"></i></button>
 		    	</span>
 			  </div>
 			</form>
 		 </div>
-		 <div class="col-sm-6" style="text-align: right; float: right;"><input type="button" class="btn btn-success" onclick="add()" value="新增"/></div>
-		</div>
+<!-- 		 <div class="col-sm-6" style="text-align: right; float: right;"><input type="button" class="btn btn-success" onclick="add()" value="新增"/></div>
+ -->		</div>
 		<div class="container-fluid" style="margin-top: 20px">
 			<div class="row">
 				<table class="table table-striped table-hover col-sm-12">

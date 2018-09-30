@@ -84,7 +84,7 @@ $(function(){
 					  <label class="form-control-label" for="organization"><span class="xingSpan">*</span>organization</label>
 					  <select id="organization" name="organization" class="form-control" required><option value="">请选择</option></select>
 					</div>
-					<button id="addBton" type="submit" class="btn btn-primary">提交</button>
+					<button id="addBton" type="submit" class="btn btn-navy">提交</button>
 				</form>
 			</div>
 		</div>

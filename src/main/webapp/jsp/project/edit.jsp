@@ -112,8 +112,8 @@ $(function(){
 <!-- 面包屑导航 -->
 <div class="BreadCrumb">
 	<ol class="BreadCrumb BreadCrumb-list">
-	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/project/list" >Project</a></li>
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/project/list" >项目</a></li>
 	  <li class="breadcrumb-item active">修改</li>
 	</ol>
 </div>
@@ -124,15 +124,15 @@ $(function(){
 		<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/project/doEdit" method="put">
 			<input type="hidden" name="id" value="${project.id }"/>
 			<div class="form-group">
-		      <label for="name"><span class="xingSpan">*</span>name:</label>
+		      <label for="name"><span class="xingSpan">*</span>名称:</label>
 		      <input type="text" class="form-control" id="name" name="name" value="${project.name}" required />
 		    </div>
 		    <div class="form-group">
-			  <label class="form-control-label" for="description">description</label>
+			  <label class="form-control-label" for="description">描述:</label>
 			  <input type="text" class="form-control" id="description" name="description" value="${requestScope.project.description}">
 			</div>
 			<div class="form-group">
-			  <label class="form-control-label" for="organization"><span class="xingSpan">*</span>organization</label>
+			  <label class="form-control-label" for="organization"><span class="xingSpan">*</span>组织:</label>
 			 <select id="organization" name="organization" class="form-control" required><option value="">请选择</option></select>
 			</div>
 			<!-- <div class="form-group">
@@ -148,11 +148,11 @@ $(function(){
 		      <input type="text" class="form-control" id="scm_url" name="scm_url">
 		    </div>
 			<div class="form-group" id="path">
-		      <label for="base_dir">PROJECT BASE PATH:</label>
+		      <label for="base_dir">项目根路径:</label>
 		      <input type="text" class="form-control" id="base_dir" disabled="disabled">
 		    </div>
 		    <div class="form-group">
-		      <label for="scm_url"><span class="xingSpan">*</span>PLAYBOOK DIRECTORY:</label>
+		      <label for="scm_url"><span class="xingSpan">*</span>PLAYBOOK:</label>
 		       <select id="playbook" name="local_path" class="form-control" required><option value="${project.local_path}" selected="selected">${project.local_path}</option></select>
 		    </div>
 			<button id="addBton" type="submit" class="btn btn-navy">提交</button>

@@ -116,8 +116,8 @@ function doAdd(){
   <div class="col-sm-6">
   	<div class="BreadCrumb">
 		<ol class="BreadCrumb BreadCrumb-list">
-		  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-		  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/templates/list">TEMPLATE</a></li>
+		  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+		  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/templates/list">模板</a></li>
 		  <li class="breadcrumb-item active">新增</li>
 		</ol>
 	</div>
@@ -129,15 +129,15 @@ function doAdd(){
      		<div class="Panel">
 				<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/templates/doAddJobTemplate" method="post">
 					<div class="form-group">
-				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <label for="name"><span class="xingSpan">*</span>名称:</label>
 				      <input type="text" class="form-control" id="name" name="name" checked="checked" required />
 				    </div>
 				    <div class="form-group">
-					  <label class="form-control-label" for="description">description</label>
+					  <label class="form-control-label" for="description">描述:</label>
 					  <input type="text" class="form-control" id="description" name="description">
 					</div>
 					<div class="form-group">
-				      <label for="job_type"><span class="xingSpan">*</span>job type:</label>
+				      <label for="job_type"><span class="xingSpan">*</span>任务类型:</label>
 				      <select class="custom-select" name="job_type" id="job_type"> 
 					      	<option value="run">Run</option>
 							<option value="check">Check</option>
@@ -145,11 +145,11 @@ function doAdd(){
 					  </select>
 				    </div>
 				    <div class="form-group">
-				      	<label for="inventory"><span class="xingSpan">*</span>inventory:</label>
+				      	<label for="inventory"><span class="xingSpan">*</span>资产清单:</label>
 				        <select id="inventory" name="inventory" class="form-control" required><option value="">请选择</option></select>
 				    </div>
 				    <div class="form-group">
-				      <label for="project"><span class="xingSpan">*</span>project:</label>
+				      <label for="project"><span class="xingSpan">*</span>项目:</label>
 				       <select id="project" name="project" class="form-control" onchange="selProject()" required><option value="">请选择一个项目</option></select>
 				    </div>
 				    <div class="form-group">
@@ -157,7 +157,7 @@ function doAdd(){
 				      <input type="text" class="form-control" id="playbook" name="playbook" readonly="readonly">
 				    </div>
 				    <div class="form-group">
-				      	<label for="credential"><span class="xingSpan">*</span>machine credential:</label>
+				      	<label for="credential"><span class="xingSpan">*</span>机器凭证:</label>
 				        <select id="credential" name="credential" class="form-control" required><option value="">请选择</option></select>
 				    </div>
 				    <div class="form-group">

@@ -50,8 +50,8 @@ function doAdd(){
 <!-- 面包屑导航 -->
 <div class="BreadCrumb">
 	<ol class="BreadCrumb BreadCrumb-list">
-	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list" >Inventory</a></li>
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list" >资产清单</a></li>
 	  <li class="breadcrumb-item active">新增</li>
 	</ol>
 </div>
@@ -61,15 +61,15 @@ function doAdd(){
      		<div class="Panel">
 				<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/inventory/doAdd" method="post">
 					<div class="form-group">
-				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <label for="name"><span class="xingSpan">*</span>名称:</label>
 				      <input type="text" class="form-control" id="name" name="name" required />
 				    </div>
 				    <div class="form-group">
-					  <label class="form-control-label" for="description">description</label>
+					  <label class="form-control-label" for="description">描述:</label>
 					  <input type="text" class="form-control" id="description" name="description">
 					</div>
 					<div class="form-group">
-					  <label class="form-control-label" for="organization"><span class="xingSpan">*</span>organization</label>
+					  <label class="form-control-label" for="organization"><span class="xingSpan">*</span>组织:</label>
 					  <select id="organization" name="organization" class="form-control" required><option value="">请选择</option></select>
 					</div>
 					<button id="addBton" type="submit" class="btn btn-navy">提交</button>

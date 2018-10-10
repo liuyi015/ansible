@@ -96,9 +96,11 @@ function doAdd(){
 <body>
 <!-- 面包屑导航 -->
 <div class="BreadCrumb">
-<ol class="BreadCrumb-list">
-  <li class="">playbook</li>
-</ol>
+	<ol class="BreadCrumb BreadCrumb-list">
+	  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+	  <li class="breadcrumb-item active">新增playbook</li>
+	  <li style="text-align: right; width: 85%"><a href="${pageContext.request.contextPath}/templates/list"><i class="fa fa-refresh"></i></a></li>
+	</ol>
 </div>
 <!-- <div class="jumbotron">
 <div class="container"> -->

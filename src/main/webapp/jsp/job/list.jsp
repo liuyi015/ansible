@@ -51,8 +51,8 @@ function toPage(page){
 	<div class="row">
 	  	<div class="BreadCrumb">
 			<ol class="BreadCrumb BreadCrumb-list">
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-			  <li class="breadcrumb-item active">JOB</li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+			  <li class="breadcrumb-item active">任务</li>
 			  <li style="text-align: right; width: 85%"><a  href="${pageContext.request.contextPath}/job/list"><i class="fa fa-refresh"></i></a></li>
 			</ol>
 		</div>
@@ -62,7 +62,7 @@ function toPage(page){
 		  <div class="col-sm-6">
 			<form class="form-inline my-2 my-lg-0" role="form">
 			 <div class="form-group">
-		    	<input type="text" class="form-control" id="search" value="${search}" name="search" placeholder="请输入job名字">
+		    	<input type="text" class="form-control" id="search" value="${search}" name="search" placeholder="请输入任务名字">
 		    	<span class="input-group-btn">
 		    		<button class="btn btn-navy" onclick="toPage(1)"><i class="fa fa-search"></i></button>
 		    	</span>
@@ -77,8 +77,9 @@ function toPage(page){
 					 <thead>
 						<tr class="old">
 							<th class="">id</th>
-							<th class="">name</th>
-							<th class="">finished</th>
+							<th class="">名称</th>
+							<th class="">状态</th>
+							<th class="">完成时间</th>
 							<th class="">操作</th>
 						</tr>
 					</thead>
@@ -88,6 +89,7 @@ function toPage(page){
 								<tr>
 									<td>${job.id}</td>
 									<td>${job.name}</td>
+									<td>${job.status == 'successful' ? '<span style="color:green">success</span>':'<span style="color:red">fail</span>'}</td>
 									<td>${job.finished}</td>
 									<td>
 									<a style="margin-right: 20px;" onclick="view(${job.id},'${job.type}')"><i class="fa fa-search-plus"></i></a>

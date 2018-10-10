@@ -33,10 +33,10 @@ function doAdd(){
 	  <div class="col-sm-6 ">
 	  	<div class="BreadCrumb">
 			<ol class="BreadCrumb BreadCrumb-list">
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">Inventory</a></li>
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/view?id=${group.inventory }">Inventory</a></li>
-			  <li class="breadcrumb-item active">增加group</li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">资产清单</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/view?id=${group.inventory }">资产清单管理</a></li>
+			  <li class="breadcrumb-item active">增加组</li>
 			</ol>
 		</div>
 	 </div>
@@ -47,11 +47,11 @@ function doAdd(){
 				<form role="form" id="addForm" name="add" action="${pageContext.request.contextPath}/group/doAdd" method="post">
 					<input type="hidden" name="inventory" value="${group.inventory }"/>
 					<div class="form-group">
-				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <label for="name"><span class="xingSpan">*</span>名称:</label>
 				      <input type="text" class="form-control" id="name" name="name" checked="checked" required />
 				    </div>
 				    <div class="form-group">
-					  <label class="form-control-label" for="description">description</label>
+					  <label class="form-control-label" for="description">描述:</label>
 					  <input type="text" class="form-control" id="description" name="description">
 					</div>
 					<button id="addBton" type="submit" class="btn btn-navy">提交</button>

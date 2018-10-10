@@ -24,14 +24,14 @@ body {
  <div class="Panel" style=" margin-top:200px;">
       <form id="loginForm" class="form-signin" action="${pageContext.request.contextPath}/doLogin" method="post">
        <!--  <img class="mb-4" src="images/logo.png" alt="" width="180" height="72"> -->
-        <h2 class="form-signin-heading text-center">Please sign in</h2>
+        <h2 class="form-signin-heading text-center">请登录</h2>
         <div class="form-group">
-	        <label class="col-form-label" for="inputDefault">Username</label>
-	        <input type="text" id="inputUsername" name="username" class="form-control b" placeholder="Username" required autofocus> </input>
+	        <label class="col-form-label" for="inputDefault">用户名</label>
+	        <input type="text" id="inputUsername" name="username" class="form-control b" placeholder="....." required autofocus> </input>
         </div>
         <div class="form-group">
-	        <label for="inputPassword">Password</label>
-	        <input type="password" id="inputPassword" name="password" class="form-control b" placeholder="Password" required />
+	        <label for="inputPassword">密码</label>
+	        <input type="password" id="inputPassword" name="password" class="form-control b" placeholder="....." required />
         </div>
         <!-- <div class="checkbox">
           <label>
@@ -39,7 +39,7 @@ body {
           </label>
         </div> -->
         <div class="form-group" style="text-align: right;">
-             <button class="btn btn-navy" id="check" type="submit" >Sign in</button>
+             <button class="btn btn-navy" id="check" type="submit" >登录</button>
         </div>
       </form>
   </div> 

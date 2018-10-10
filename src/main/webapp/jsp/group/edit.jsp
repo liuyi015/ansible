@@ -33,9 +33,9 @@ function doEdit(){
 	  <div class="col-sm-6 ">
 	  	<div class="BreadCrumb">
 			<ol class="BreadCrumb BreadCrumb-list">
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">Inventory</a></li>
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/view?id=${group.inventory }">Inventory</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">资产清单</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/view?id=${group.inventory }">资产清单管理</a></li>
 			  <li class="breadcrumb-item active">修改group</li>
 			</ol>
 		</div>
@@ -48,11 +48,11 @@ function doEdit(){
 					<input type="hidden" name="inventory" value="${group.inventory }"/>
 					<input type="hidden" name="id" value="${group.id }"/>
 					<div class="form-group">
-				      <label for="name"><span class="xingSpan">*</span>name:</label>
+				      <label for="name"><span class="xingSpan">*</span>名称:</label>
 				      <input type="text" class="form-control" id="name" name="name" checked="checked" required value="${group.name }" />
 				    </div>
 				    <div class="form-group">
-					  <label class="form-control-label" for="description">description</label>
+					  <label class="form-control-label" for="description">描述</label>
 					  <input type="text" class="form-control" id="description" name="description" value="${group.description }">
 					</div>
 					<button id="addBton" type="submit" class="btn btn-navy">提交</button>

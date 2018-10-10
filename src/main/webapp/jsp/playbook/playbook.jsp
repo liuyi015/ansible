@@ -13,11 +13,23 @@
 	<table id="mytable" style="border-collapse:separate; border-spacing:10px 10px;" >
 	<c:if test="${requestScope.list !=null}">
 		<c:forEach var="item" items="${requestScope.list }" varStatus="status">
-		       <tr >
-					<td><span class="xingSpan">*</span>参数名称:</td><td><input type="text" id="name${status.index}" class="form-control" name="parameter[${status.index}].name" value="${item.name }" readonly=""/></td>
-					<td><span class="xingSpan">*</span>参数代码:</td><td><input type="text" id="parameter_name${status.index}" class="form-control" name="parameter[${status.index}].parameter_name" value="${item.parameter_name }" readonly=""/></td>
+			<div class="form-group row">
+			      <label class="col-1 col-form-label">参数名称:</label>
+			      <div class="col-4">
+			        <input type="text" id="name${status.index}" class="form-control" name="parameter[${status.index}].name" value="${item.name }" readonly="">
+			      </div>
+			      <input type="hidden" id="parameter_name${status.index}" class="form-control" name="parameter[${status.index}].parameter_name" value="${item.parameter_name }" readonly=""/>
+			      <label class="col-1 col-form-label"><span class="xingSpan">*</span>参数赋值:</label>
+			      <div class="col-6">
+			        <input type="text" id="parameter_value${status.index}" class="form-control" name="parameter[${status.index}].parameter_value" value="${item.parameter_value }"/>
+			      </div>
+		    </div>
+		       <%-- <tr>
+					<td>参数名称:</td><td><input type="text" id="name${status.index}" class="form-control" name="parameter[${status.index}].name" value="${item.name }" readonly=""/></td>
+					<td>参数代码:</td><td><input type="text" id="parameter_name${status.index}" class="form-control" name="parameter[${status.index}].parameter_name" value="${item.parameter_name }" readonly=""/></td>
 					<td><span class="xingSpan">*</span>参数赋值:</td><td><input type="text" id="parameter_value${status.index}" class="form-control" name="parameter[${status.index}].parameter_value" value="${item.parameter_value }"/></td>
-				</tr>
+				</tr> --%>
+			
 		</c:forEach>
 	</c:if>
 	</table>

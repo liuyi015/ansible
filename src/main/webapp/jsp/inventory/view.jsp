@@ -67,9 +67,9 @@ function delHost(id,inventory){
 	  <div class="col-sm-6 ">
 	  	<div class="BreadCrumb">
 			<ol class="BreadCrumb BreadCrumb-list">
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">Inventory</a></li>
-			  <li class="breadcrumb-item active">${inventory}</li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/inventory/list">资产清单</a></li>
+			  <li class="breadcrumb-item active">资产清单管理</li>
 			</ol>
 		</div>
 	 </div>
@@ -82,7 +82,7 @@ function delHost(id,inventory){
 			  <div class="col-sm-6">
 				<form class="form-inline my-2 my-lg-0" role="form" action="${pageContext.request.contextPath}/group/search" method="post">
 				 <div class="form-group">
-			    	<input type="text" class="form-control" id="name" value="${group.name}" name="name" placeholder="请输入group名字">
+			    	<input type="text" class="form-control" id="name" value="${group.name}" name="name" placeholder="请输入组名字">
 			    	<span class="input-group-btn">
 			    		<button class="btn btn-navy"><i class="fa fa-search"></i></button>
 			    	</span>
@@ -96,7 +96,7 @@ function delHost(id,inventory){
 					<table class="table table-striped table-hover col-sm-12">
 						 <thead>
 							 <tr class="old">
-								<th scope="col">name</th>
+								<th scope="col">名称</th>
 								<th scope="col">操作</th>
 							</tr>
 						 </thead>
@@ -138,8 +138,8 @@ function delHost(id,inventory){
 						<table class="table table-striped table-hover col-sm-12">
 							 <thead>
 								 <tr class="old">
-									<th scope="col">name</th>
-									<th scope="col">enabled</th>
+									<th scope="col">名称</th>
+									<th scope="col">是否可用</th>
 									<th scope="col">操作</th>
 								</tr>
 							 </thead>

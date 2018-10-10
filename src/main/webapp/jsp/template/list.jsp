@@ -60,8 +60,8 @@ function toPage(page){
 	<div class="row">
 	  	<div class="BreadCrumb">
 			<ol class="BreadCrumb BreadCrumb-list">
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-			  <li class="breadcrumb-item active">TEMPLATE</li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+			  <li class="breadcrumb-item active">模板</li>
 			  <li style="text-align: right; width: 85%"><a href="${pageContext.request.contextPath}/templates/list"><i class="fa fa-refresh"></i></a></li>
 			</ol>
 		</div>
@@ -86,9 +86,9 @@ function toPage(page){
 				<table class="table table-striped table-hover col-sm-12">
 					 <thead>
 						 <tr class="old">
-							<th scope="col">name</th>
-							<th scope="col">type</th>
-							<th scope="col">description</th>
+							<th scope="col">名称</th>
+							<th scope="col">类型</th>
+							<th scope="col">描述</th>
 							<th scope="col">修改时间</th>
 							<th scope="col">操作</th>
 						</tr>

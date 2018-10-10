@@ -44,19 +44,19 @@ body {
        <div class="collapse navbar-collapse" id="navbarResponsive">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item">
-	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/playbook/toAdd">新建playbook</a>
+	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/playbook/toAdd">Playbook</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/project/list">allProject</a>
+	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/project/list">项目</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/inventory/list">allInventory</a>
+	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/inventory/list">资产清单</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/templates/list">allTemplate</a>
+	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/templates/list">模板</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/job/list">allJob</a>
+	        <a class="nav-link" target="mainFrame" href="${pageContext.request.contextPath}/job/list">任务</a>
 	      </li>
 	    </ul>
 	   </div>

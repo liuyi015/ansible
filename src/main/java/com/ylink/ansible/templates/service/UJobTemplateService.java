@@ -97,7 +97,7 @@ public class UJobTemplateService {
 	 * @throws Exception
 	 */
 	public ResultInfo findTemplate(Map<String, Object> params, Cookie[] cookies) throws Exception {
-		String url=API_URL+"/unified_job_templates/?page_size="+PAGE_SIZE+"&order_by=name&type=workflow_job_template,job_template";
+		String url=API_URL+"/unified_job_templates/?page_size="+PAGE_SIZE+"&order_by=-modified&type=workflow_job_template,job_template";
 		Cookie token = Common.getToken(cookies);
 		if(params!=null) {
 			//拼接url

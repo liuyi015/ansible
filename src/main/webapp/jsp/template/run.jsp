@@ -61,8 +61,8 @@ function getStatus(apiurl){
 	  <div class="col-sm-6 ">
 	  	<div class="BreadCrumb">
 			<ol class="BreadCrumb BreadCrumb-list">
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
-			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/job/list">Jobs</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">首页</a></li>
+			  <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/job/list">任务</a></li>
 			  <li class="breadcrumb-item active">${run.name}</li>
 			</ol>
 		</div>

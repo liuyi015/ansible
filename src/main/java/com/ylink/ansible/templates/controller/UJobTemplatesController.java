@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ylink.ansible.common.ResultInfo;
@@ -56,7 +57,9 @@ public class UJobTemplatesController {
 			request.setAttribute("search", search);
 		}
 		resultInfo = templateService.findTemplate(params, cookies);
-		resultInfo.setCurrentPage(Integer.parseInt(page));
+		if(resultInfo!=null) {
+			resultInfo.setCurrentPage(Integer.parseInt(page));
+		}
 		request.setAttribute("reInfo", resultInfo);
 		return "template/list";
 	}
@@ -149,16 +152,19 @@ public class UJobTemplatesController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toDelete")
+	@ResponseBody
 	public String toDelete(@RequestParam String id,HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
 		
 		String rs = templateService.deleteTemplate(id,cookies);
 		if(rs==null) {
 			request.getSession().setAttribute("msg", "删除失败 ！！！！！");
+			return "1";
 		}else {
 			request.getSession().setAttribute("msg", "成功删除 ！！！！！");
+			return "2";
 		}
-		return "redirect:/templates/list";
+//		return "redirect:/templates/list";
 	}
 
 	@RequestMapping("/run")

@@ -22,43 +22,54 @@ public class FileUtil {
 	public static Boolean replaceFileStr(String srcFile, String newFile,List<Parameter> parameter) throws  IOException{
 		long starttime=System.currentTimeMillis();
 		
-		File file1=new File(srcFile);//读取文件
+		if(parameter==null|| parameter.size()<=0) {
+			return false;
+		}
+		int size = parameter.size();   //参数个数
+		int i=0;  //参数指针
+		
+		File file1=new File(srcFile); //读取文件
 		if(!file1.isFile()) {
 			System.out.println(srcFile+"不是文件");
 			return false;
 		}
-		FileReader fr =new FileReader(file1);
-		
 		File file2=new File(newFile);//新生文件
-		FileWriter fw =new FileWriter(file2);
- 
+		
+		FileReader fr =new FileReader(file1);
 		BufferedReader br=new BufferedReader(fr);
-		BufferedWriter bw=new BufferedWriter(fw);
+		
+		FileWriter fw =null;
+		BufferedWriter bw=null;
  
 		try {
 			// 创建字符串构建器
 			StringBuilder builder = new StringBuilder();
 			//创建缓存字符串数组
-			char[] data=new char[1024];
 			String temp=null;
 			//读取数据
 			while((temp=br.readLine())!=null){ 
+				temp=temp.replace(parameter.get(i).getParameter_name(), parameter.get(i).getParameter_value());
 				System.out.println(temp);
 				builder.append(temp);
 				builder.append("\r\n");
+				if(i<size) {
+					i++;
+				}
 			}
 			br.close();
 			// 从构建器中生成字符串，并替换搜索文本
 			String str = builder.toString();
-			if(parameter==null) {
-				return false;
-			}
-			int size = parameter.size();
-			for(int i=0;i<size;i++) {
-				/*System.out.println(parameter.get(i).getParameter_name());
-				System.out.println(parameter.get(i).getParameter_value());*/
+			
+			/*//会替换不该替换的字符串中的一部分
+			 * for(int i=0;i<size;i++) {
+				System.out.print(parameter.get(i).getParameter_name()+":");
+				System.out.println(parameter.get(i).getParameter_value());
 				str=str.replace(parameter.get(i).getParameter_name(), parameter.get(i).getParameter_value());
-			}
+			}*/
+			
+			//写入新文件
+			fw =new FileWriter(file2);
+			bw=new BufferedWriter(fw);
 			bw.write(str.toCharArray());
 			bw.flush();
 			bw.close();
@@ -98,7 +109,14 @@ public class FileUtil {
 				String[] split = temp.split(":");
 				Parameter parameter = new Parameter();
 				parameter.setName(split[0]);
-				parameter.setParameter_name(split[1].trim());
+				String paramValue = split[1].trim();
+				//判断是否是“vars”格式，是---》去除“”
+				if(paramValue.contains("\"")) {
+					String substring = paramValue.substring(1, paramValue.length()-1);
+					parameter.setParameter_name(substring);
+				}else {
+					parameter.setParameter_name(split[1].trim());
+				}
 				list.add(parameter);
 			}
 			br.close();

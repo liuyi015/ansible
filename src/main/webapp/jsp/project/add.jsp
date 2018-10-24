@@ -32,11 +32,11 @@ function getConfig(){
 		type:"GET",
 		async:false, //设为同步请求（异步加载的话后面的遍历方法获取不到option）
 		url:"${pageContext.request.contextPath}/config/getConfig",
+		dataType:"json",
 		success:function(data){
-			var jsonDate=JSON.parse(data);
-			var base_dir=jsonDate.project_base_dir;
+			var base_dir=data.project_base_dir;
 			$("#base_dir").val(base_dir);
-			var local_path=jsonDate.project_local_paths;
+			var local_path=data.project_local_paths;
 			//动态添加select的option
 			for(var i in local_path){
 				$("#playbook").append("<option value='"+local_path[i]+"'>"+local_path[i]+"</option>");

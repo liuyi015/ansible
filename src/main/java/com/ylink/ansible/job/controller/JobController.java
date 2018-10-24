@@ -65,12 +65,15 @@ public class JobController {
 			request.setAttribute("search", search);
 		}
 		resultInfo=jobService.findUnifiedJob(params,cookies);
-		resultInfo.setCurrentPage(Integer.parseInt(page));
+		if(resultInfo!=null) {
+			resultInfo.setCurrentPage(Integer.parseInt(page));
+		}
 		request.setAttribute("reInfo", resultInfo);
 		return "job/list";
 	}
 	
 	@RequestMapping("/toDelete")
+	@ResponseBody
 	public String toDelete(@RequestParam String id,@RequestParam String type,HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
 		if(StringUtils.isEmpty(type)&& StringUtils.isEmpty(id)) {
@@ -80,10 +83,12 @@ public class JobController {
 		String rs=jobService.deleteJob(id,type,cookies);
 		if(StringUtils.isNotEmpty(rs)) {
 			request.getSession().setAttribute("msg", "删除成功！！！！！！");
+			return "2";
 		}else {
 			request.getSession().setAttribute("msg", "删除失败！！！！！！");
+			return "1";
 		}
-		return "redirect:/job/list";
+//		return "redirect:/job/list";
 		
 	}
 	

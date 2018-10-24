@@ -56,7 +56,7 @@ function delHost(id,inventory){
 	}
 	var url="${pageContext.request.contextPath}/host/toDelete?id="+id+"&inventory="+inventory;
 	location.href=url;
-}
+};
 
 
 </script>
@@ -81,8 +81,9 @@ function delHost(id,inventory){
 		  <div class="row">
 			  <div class="col-sm-6">
 				<form class="form-inline my-2 my-lg-0" role="form" action="${pageContext.request.contextPath}/group/search" method="post">
-				 <div class="form-group">
-			    	<input type="text" class="form-control" id="name" value="${group.name}" name="name" placeholder="请输入组名字">
+				 <div class="form-group" hidden="">
+			    	<input type="text" class="form-control" id="search" value="${search}" name="search" placeholder="请输入....">
+			    	<input type="hidden" id="inventoryId" value="${inventory}" name="inventoryId">
 			    	<span class="input-group-btn">
 			    		<button class="btn btn-navy"><i class="fa fa-search"></i></button>
 			    	</span>
@@ -123,8 +124,9 @@ function delHost(id,inventory){
 			  <div class="row">
 				  <div class="col-sm-6">
 					<form class="form-inline my-2 my-lg-0" role="form" action="${pageContext.request.contextPath}/host/search" method="post">
-					 <div class="form-group">
-				    	<input type="text" class="form-control" id="name" value="${host.name}" name="name" placeholder="请输入主机名字">
+					 <div class="form-group" hidden="">
+				    	<input type="text" class="form-control" id="search" value="${search}" name="search" placeholder="请输入....">
+				    	<input type="hidden" id="inventoryId" value="${inventory}" name="inventoryId">
 				    	<span class="input-group-btn">
 				    		<button class="btn btn-navy"><i class="fa fa-search"></i></button>
 				    	</span>

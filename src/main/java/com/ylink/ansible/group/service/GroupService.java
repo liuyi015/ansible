@@ -3,6 +3,8 @@ package com.ylink.ansible.group.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.Cookie;
 
@@ -23,6 +25,31 @@ public class GroupService {
 
 	@Value("${API_URL}")
 	private String API_URL;
+	
+	public List<Group> toList(String inventoryId, Map<String, Object> params,Cookie[] cookies) throws Exception {
+		String url=API_URL+"/inventories/"+inventoryId+"/root_groups/?order_by=name";
+		if(params!=null) {
+			//拼接url
+			for(Entry<String, Object> entry:params.entrySet()) {
+				url=url+"&"+entry.getKey()+"="+entry.getValue();
+			}
+		}
+		Cookie token = Common.getToken(cookies);
+		String rs = HttpRequestUtils.sendHttpsRequestByGet(url, token);
+		
+		List<Group> list=new ArrayList<>();
+		if(StringUtils.isEmpty(rs)) {
+			return null;
+		}
+		JSONArray results = JSONObject.fromObject(rs).getJSONArray("results");
+		Iterator<Project> it = results.iterator();
+		while(it.hasNext()) {
+			Group group = (Group) JSONObject.toBean(JSONObject.fromObject(it.next()), Group.class);
+			list.add(group);
+		}
+		
+		return list;
+	}
 	
 	public String addGroup(Group group, Cookie[] cookies) throws Exception {
 		String apiUrl=API_URL+"/groups/";

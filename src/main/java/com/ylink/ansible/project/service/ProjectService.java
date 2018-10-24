@@ -32,7 +32,14 @@ public class ProjectService {
 	public ResultInfo toList(Map<String, Object> params,Cookie[] cookie) throws Exception {
 		//拼接url，获取get返回值
 		String result = getResult(params, cookie);
+		
+		ResultInfo resultInfo=new ResultInfo();
 		//截取结果集
+		if(StringUtils.isEmpty(result)) {
+			/*resultInfo.setPageSize(PAGE_SIZE);
+			return resultInfo;*/
+			return null;
+		}
 		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
 		List<Project> list=new ArrayList<>();
 		Iterator<Project> it = results.iterator();
@@ -43,11 +50,12 @@ public class ProjectService {
 		//截取总数量
 		int count = JSONObject.fromObject(result).getInt("count");
 		
-		ResultInfo resultInfo=new ResultInfo();
+		
 		resultInfo.setCount(count);
 		int totalPage=(count+PAGE_SIZE-1)/PAGE_SIZE;
 		resultInfo.setTotalPage(totalPage);
 		resultInfo.setList(list);
+		resultInfo.setPageSize(PAGE_SIZE);
 		
 		System.out.println(list.toString());
 		return resultInfo;
@@ -61,8 +69,10 @@ public class ProjectService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Project> getAllProject(Cookie[] cookie) throws Exception {
-		//拼接url，获取get返回值
-		String result = getResult(null, cookie);
+		
+		String url=API_URL+"/projects/?order_by=name";
+		Cookie token = Common.getToken(cookie);
+		String result = HttpRequestUtils.sendHttpsRequestByGet(url, token);
 		//截取结果集
 		JSONArray results = JSONObject.fromObject(result).getJSONArray("results");
 		List<Project> list=new ArrayList<>();

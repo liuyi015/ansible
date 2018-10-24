@@ -78,6 +78,7 @@ public class JobService {
 		resultInfo.setCount(count);
 		int totalPage=(count+PAGE_SIZE-1)/PAGE_SIZE;
 		resultInfo.setTotalPage(totalPage);
+		resultInfo.setPageSize(PAGE_SIZE);
 		resultInfo.setList(list);
 		System.out.println(list.toString());
 		

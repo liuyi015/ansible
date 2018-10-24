@@ -10,6 +10,15 @@ public class ResultInfo {
 	private int count;  //总数量
 	private int totalPage; //总页数
 	private int currentPage; //当前页数
+	private int pageSize; //页数大小
+	
+	
+	public final int getPageSize() {
+		return pageSize;
+	}
+	public final void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 	public final Object getList() {
 		return list;
 	}

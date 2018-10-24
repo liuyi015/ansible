@@ -25,6 +25,7 @@ public class Job {
 	private Integer inventory;
 	private Integer project;
 	private String playbook;
+	private String job_template;
 	
 	private String scm_branch;
 	private String credential;
@@ -40,6 +41,12 @@ public class Job {
 	
 	
 	
+	public final String getJob_template() {
+		return job_template;
+	}
+	public final void setJob_template(String job_template) {
+		this.job_template = job_template;
+	}
 	public final String getVerbosity() {
 		return verbosity;
 	}

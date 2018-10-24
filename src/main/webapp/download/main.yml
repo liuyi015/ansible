@@ -1,1 +1,3 @@
-selinux_status: ansible_playbook_vars_1
+ch1: "ansible_playbook_vars_1"
+ch2: "ansible_playbook_vars_2"
+ch3: ansible_playbook_vars_3

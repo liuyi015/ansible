@@ -1,5 +1,9 @@
 package com.ylink.ansible.group.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,9 +11,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ylink.ansible.common.ResultInfo;
 import com.ylink.ansible.group.pojo.Group;
 import com.ylink.ansible.group.service.GroupService;
 
@@ -20,6 +26,41 @@ import net.sf.json.JSONObject;
 public class GroupController {
 	@Autowired
 	private GroupService groupService;
+	
+	/**
+	 * 查询(功能未完成)
+	 * @param request
+	 * @return  json
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/search",method=RequestMethod.GET)
+	public String toList(HttpServletRequest request) throws Exception {
+		Cookie[] cookies = request.getCookies();
+		Map<String, Object> params=new HashMap<>();
+		/*ResultInfo resultInfo=new ResultInfo();
+		
+		String page = request.getParameter("page");
+		if(StringUtils.isEmpty(page)) {
+			page="1";
+		}
+		params.put("page", page);*/
+		
+		String search = request.getParameter("search");
+		String inventoryId = request.getParameter("inventoryId");
+		if(StringUtils.isNotEmpty(search)) {
+			String[] s = search.split(" ");
+			for(int i=0;i<s.length;i++) {
+				params.put("search", s[i]);
+			}
+			request.setAttribute("search", search);
+		}
+		
+		
+		 List<Group> rootGrops = groupService.toList(inventoryId,params,cookies);
+		request.setAttribute("rootGrops", rootGrops);
+		
+		return "inventory/list";
+	}
 
 	@RequestMapping("/toAdd")
 	public String toAdd(Integer inventory,HttpServletRequest request) {

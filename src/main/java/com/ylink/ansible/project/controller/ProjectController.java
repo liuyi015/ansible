@@ -60,7 +60,10 @@ public class ProjectController {
 			request.setAttribute("search", search);
 		}
 		reInfo = projectService.toList(params, cookies);
-		reInfo.setCurrentPage(Integer.parseInt(page));
+		
+		if(reInfo!=null) {
+			reInfo.setCurrentPage(Integer.parseInt(page));
+		}
 		
 		request.setAttribute("reInfo", reInfo);
 		return "project/list";
@@ -199,15 +202,18 @@ public class ProjectController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toDelete")
+	@ResponseBody
 	public String toDelete(@RequestParam String id,HttpServletRequest request) throws Exception {
 		Cookie[] cookies = request.getCookies();
 		
 		String rs = projectService.deleteProject(id,cookies);
 		if(rs==null) {
 			request.getSession().setAttribute("msg", "删除失败 ！！！！！");
+			return "1";
 		}else {
 			request.getSession().setAttribute("msg", "成功删除 ！！！！！");
+			return "2";
 		}
-		return "redirect:/project/list";
+//		return "redirect:/project/list";
 	}
 }

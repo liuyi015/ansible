@@ -117,6 +117,7 @@ public class UJobTemplateService {
 		resultInfo.setCount(count);
 		int totalPage=(count+PAGE_SIZE-1)/PAGE_SIZE;
 		resultInfo.setTotalPage(totalPage);
+		resultInfo.setPageSize(PAGE_SIZE);
 		
 		List<Template> list=new ArrayList<>();
 		Iterator<Template> it = results.iterator();

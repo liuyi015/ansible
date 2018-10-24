@@ -43,8 +43,25 @@ function del(id){
 	if(!confirm("确认删除"+id+"项目")){
 		return;
 	}
-	var url="${pageContext.request.contextPath}/inventory/toDelete?id="+id;
-	location.href=url;
+	$.ajax({
+		url:"${pageContext.request.contextPath}/inventory/toDelete",
+		type:"post",
+		data:{"id":id},
+		dataType:"text",
+		success:function(data){
+			var currentPage=$("#currentPage").val();
+			var count=$("#count").val();
+			var pageSize=$("#pageSize").val();
+			//计算删除一条后的总页码数
+			var totalPage=(Number(count) + Number(pageSize)-2)/pageSize;
+			if(currentPage>totalPage){
+				toPage(currentPage-1);
+			}else{
+				toPage(currentPage);
+			}
+			
+		}
+	}); 
 }
 /*翻页、查询  */
 function toPage(page){
@@ -110,6 +127,9 @@ function toPage(page){
 		<!--分页  -->
 		<div class="row" style="text-align: right;float: right; margin-top: 20px;">
 			<c:if test="${reInfo.totalPage !=0}">
+				<input id="currentPage" type="hidden" value="${reInfo.currentPage}">
+			 	<input id="count" type="hidden" value="${reInfo.count}">
+				<input id="pageSize" type="hidden" value="${reInfo.pageSize}">
 				<span style="margin-top: 10px; margin-right: 10px">共&nbsp;${reInfo.count}&nbsp;行</span>
 				<ul class="pagination">
 				  	<c:choose>

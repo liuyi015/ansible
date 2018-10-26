@@ -3,6 +3,7 @@ package com.ylink.ansible.playbook.service;
 
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -126,6 +127,12 @@ public class PlaybookService {
 			Channel channel = session.openChannel("sftp");
 			channel.connect();
 			sftp = (ChannelSftp) channel;
+			/*Class cl=ChannelSftp.class;
+
+			Field f1 =cl.getDeclaredField("server_version");
+			f1.setAccessible(true);
+			f1.set(sftp, 2);
+			sftp.setFilenameEncoding("utf-8");*/
 			//1、下载playbook变量文件
 			Boolean rs = SFTPUtil.download(srcFile, saveFilePath, sftp);
 			if(rs) {

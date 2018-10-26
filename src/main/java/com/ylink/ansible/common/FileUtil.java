@@ -106,17 +106,29 @@ public class FileUtil {
 			//读取数据
 			while((temp=br.readLine())!=null){ 
 				System.out.println(temp);
-				String[] split = temp.split(":");
+				
 				Parameter parameter = new Parameter();
-				parameter.setName(split[0]);
-				String paramValue = split[1].trim();
+				
+				//分割出备注
+				String[] params = null;    //参数数组，不包含备注
+				if(temp.contains("#")) {
+					String[] split = temp.split("#");
+					params=split[0].split(":");
+					parameter.setRemark(split[1]);
+				}else {
+					params=temp.split(":");
+				}
+				
+				parameter.setName(params[0]);
+				String paramName = params[1].trim();
 				//判断是否是“vars”格式，是---》去除“”
-				if(paramValue.contains("\"")) {
-					String substring = paramValue.substring(1, paramValue.length()-1);
+				if(paramName.contains("\"")) {
+					String substring = paramName.substring(1, paramName.length()-1);
 					parameter.setParameter_name(substring);
 				}else {
-					parameter.setParameter_name(split[1].trim());
+					parameter.setParameter_name(paramName);
 				}
+				
 				list.add(parameter);
 			}
 			br.close();
